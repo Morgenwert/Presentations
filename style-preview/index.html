@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morgenwert Style Preview</title>
+    <style>
+        :root {
+            /* Morgenwert Farben - Blau + Graustufen */
+            --accent-primary: #1e40af;
+            --accent-secondary: #3b82f6;
+            --accent-light: #60a5fa;
+
+            /* Orange Akzent */
+            --accent-orange: #f97316;
+            --accent-orange-light: #fdba74;
+
+            /* Light Theme - Graustufen */
+            --bg-color: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+
+            /* Borders & Shadows */
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--bg-color);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            display: block;
+            text-decoration: none;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            font-weight: 600;
+            border-left: 3px solid var(--accent-primary);
+            margin-left: -3px;
+        }
+
+        .nav-number {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 1.5rem;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1002;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .section-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .accent-text {
+            color: var(--accent-primary);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-secondary);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--accent-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.08), rgba(59, 130, 246, 0.08));
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 0 8px 8px 0;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            transform: translateX(-50%);
+            border: 3px solid var(--bg-color);
+        }
+
+        .timeline-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-color);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .btn-orange {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: #ea580c;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin: 1.5rem 0;
+        }
+
+        .accordion-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent-primary);
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 300px;
+        }
+
+        .accordion-body {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.25rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--accent-primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        li::marker {
+            color: var(--accent-primary);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-orange {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .badge-blue {
+            background: rgba(30, 64, 175, 0.1);
+            color: var(--accent-primary);
+        }
+
+        /* Stat Box */
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Calculator */
+        .calculator {
+            max-width: 100%;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-group input {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-color);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .input-group input::-webkit-inner-spin-button {
+            opacity: 1;
+        }
+
+        .calc-results {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+
+        .result-value.primary {
+            color: var(--accent-primary);
+        }
+
+        /* Pricing Calculator */
+        .phase-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .phase-item:last-child {
+            border-bottom: none;
+        }
+
+        .phase-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .phase-days {
+            width: 80px;
+        }
+
+        .phase-days input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .phase-days input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .phase-cost {
+            min-width: 100px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .pricing-summary {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .summary-row.discount {
+            color: #10b981;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--border-color);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .summary-row.total .summary-value {
+            color: var(--accent-orange);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar" style="width: 25%;"></div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+    </button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <a href="#intro" class="nav-logo">Morgenwert</a>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#intro" class="nav-link active">
+                    <span class="nav-number">01</span>
+                    Einfuhrung
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#features" class="nav-link">
+                    <span class="nav-number">02</span>
+                    Features
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#timeline" class="nav-link">
+                    <span class="nav-number">03</span>
+                    Timeline
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#interactive" class="nav-link">
+                    <span class="nav-number">04</span>
+                    Interaktiv
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#calculator" class="nav-link">
+                    <span class="nav-number">05</span>
+                    ROI-Rechner
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#pricing" class="nav-link">
+                    <span class="nav-number">06</span>
+                    Preiskalkulator
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <!-- Section 1: Introduction -->
+        <section id="intro">
+            <div class="section-inner">
+                <h1>Morgenwert <span class="accent-text">Style Preview</span></h1>
+                <p class="subtitle">
+                    So sehen Prasentationen im neuen Morgenwert Corporate Design aus - hell, professionell und modern.
+                    <span class="badge badge-orange">Neu</span>
+                </p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9728;</div>
+                        <h3 class="feature-title">Light Mode</h3>
+                        <p class="feature-desc">Heller, professioneller Look mit klarem Kontrast.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3 class="feature-title">Blau + Grau</h3>
+                        <p class="feature-desc">Vertrauenswurdige Farbpalette fur Business.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#10024;</div>
+                        <h3 class="feature-title">Dezente Schatten</h3>
+                        <p class="feature-desc">Subtile Tiefe statt Glassmorphism.</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="#features" class="btn btn-primary">Mehr erfahren &rarr;</a>
+                    <a href="#interactive" class="btn btn-orange">Demo starten</a>
+                    <a href="#interactive" class="btn btn-secondary">Interaktive Elemente</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Features -->
+        <section id="features">
+            <div class="section-inner">
+                <h2>Design <span class="accent-text">Features</span></h2>
+
+                <div class="card">
+                    <h3>Farbpalette</h3>
+                    <ul>
+                        <li><strong>Dunkelblau #1e40af</strong> - Hauptfarbe fur Uberschriften und CTAs</li>
+                        <li><strong>Mittelblau #3b82f6</strong> - Akzente und Hover-Effekte</li>
+                        <li><strong>Hellblau #60a5fa</strong> - Highlights</li>
+                        <li><strong>Graustufen</strong> - Texte und Hintergrunde</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Tipp</h4>
+                    <p>Die Farbpalette ist fur professionelle Business-Prasentationen optimiert und vermittelt Vertrauen und Kompetenz.</p>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Statistik-Beispiel <span class="badge badge-orange">Orange Akzent</span></h3>
+                <div class="feature-grid" style="margin-top: 1rem;">
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Kundenzufriedenheit</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Projekte</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">24h</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Timeline -->
+        <section id="timeline">
+            <div class="section-inner">
+                <h2>Beispiel <span class="accent-text">Timeline</span></h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">Schritt 1: Anforderungen</h4>
+                        <p>Thema und Inhalte definieren</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">Schritt 2: Erstellung</h4>
+                        <p>Claude generiert die HTML-Prasentation</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">Schritt 3: Review</h4>
+                        <p>Anpassungen und Feinschliff</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">Schritt 4: Deployment</h4>
+                        <p>Push zu GitHub Pages und Link teilen</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Interactive Elements -->
+        <section id="interactive">
+            <div class="section-inner">
+                <h2>Interaktive <span class="accent-text">Elemente</span></h2>
+
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Tabs</button>
+                        <button class="tab-btn" onclick="switchTab(event, 'tab2')">Accordions</button>
+                        <button class="tab-btn" onclick="switchTab(event, 'tab3')">Cards</button>
+                    </div>
+                    <div id="tab1" class="tab-panel active">
+                        <p>Tabs eignen sich perfekt, um verwandte Inhalte zu gruppieren ohne die Seite zu uberladen.</p>
+                    </div>
+                    <div id="tab2" class="tab-panel">
+                        <p>Accordions sind ideal fur FAQs oder detaillierte Informationen, die nicht sofort sichtbar sein mussen.</p>
+                    </div>
+                    <div id="tab3" class="tab-panel">
+                        <p>Cards strukturieren Inhalte visuell und machen sie leichter erfassbar.</p>
+                    </div>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Wie funktioniert das Accordion?
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Klicke auf die Uberschrift, um den Inhalt ein- oder auszublenden. Perfekt fur FAQs!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Welche Elemente sind verfugbar?
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Cards, Feature Grids, Tabs, Accordions, Timelines, Highlight Boxes, Buttons und mehr.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: ROI Calculator -->
+        <section id="calculator">
+            <div class="section-inner">
+                <h2>ROI-<span class="accent-text">Rechner</span> <span class="badge badge-orange">Interaktiv</span></h2>
+                <p class="subtitle">Berechne den Return on Investment fur dein Automatisierungsprojekt.</p>
+
+                <div class="card calculator">
+                    <h3>Eingaben</h3>
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label for="mitarbeiter">Anzahl Mitarbeiter</label>
+                            <input type="number" id="mitarbeiter" value="5" min="1" oninput="calculateROI()">
+                        </div>
+                        <div class="input-group">
+                            <label for="stunden">Stunden pro Woche</label>
+                            <input type="number" id="stunden" value="10" min="1" oninput="calculateROI()">
+                        </div>
+                        <div class="input-group">
+                            <label for="stundensatz">Stundensatz (EUR)</label>
+                            <input type="number" id="stundensatz" value="50" min="1" oninput="calculateROI()">
+                        </div>
+                        <div class="input-group">
+                            <label for="implementierung">Implementierungskosten (EUR)</label>
+                            <input type="number" id="implementierung" value="15000" min="0" oninput="calculateROI()">
+                        </div>
+                        <div class="input-group">
+                            <label for="monatlich">Monatliche Kosten (EUR)</label>
+                            <input type="number" id="monatlich" value="500" min="0" oninput="calculateROI()">
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 1.5rem;">Ergebnisse</h3>
+                    <div class="calc-results">
+                        <div class="result-item">
+                            <span class="result-label">Aktuelle Kosten/Jahr</span>
+                            <span class="result-value primary" id="aktuelle-kosten">0 EUR</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Netto-Einsparung/Jahr</span>
+                            <span class="result-value" id="einsparung">0 EUR</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">ROI</span>
+                            <span class="result-value" id="roi">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Amortisation</span>
+                            <span class="result-value primary" id="amortisation">0 Monate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>So funktioniert's</h4>
+                    <p>Die Berechnung basiert auf 48 Arbeitswochen pro Jahr und einem Automatisierungsgrad von 80%. Passe die Eingaben an, um dein Einsparpotenzial zu sehen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Pricing Calculator -->
+        <section id="pricing">
+            <div class="section-inner">
+                <h2>Preis-<span class="accent-text">Kalkulator</span> <span class="badge badge-orange">Interaktiv</span></h2>
+                <p class="subtitle">Berechne die Projektkosten basierend auf Phasen und Tagessatz.</p>
+
+                <div class="card calculator">
+                    <h3>Projektphasen</h3>
+                    <div class="phase-list">
+                        <div class="phase-item">
+                            <span class="phase-name">Analyse & Konzept</span>
+                            <div class="phase-days">
+                                <input type="number" id="phase1" value="3" min="0" oninput="calculatePricing()">
+                            </div>
+                            <span class="phase-cost" id="cost1">0 EUR</span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-name">Entwicklung</span>
+                            <div class="phase-days">
+                                <input type="number" id="phase2" value="10" min="0" oninput="calculatePricing()">
+                            </div>
+                            <span class="phase-cost" id="cost2">0 EUR</span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-name">Testing & QA</span>
+                            <div class="phase-days">
+                                <input type="number" id="phase3" value="2" min="0" oninput="calculatePricing()">
+                            </div>
+                            <span class="phase-cost" id="cost3">0 EUR</span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-name">Deployment & Schulung</span>
+                            <div class="phase-days">
+                                <input type="number" id="phase4" value="2" min="0" oninput="calculatePricing()">
+                            </div>
+                            <span class="phase-cost" id="cost4">0 EUR</span>
+                        </div>
+                    </div>
+
+                    <h3>Einstellungen</h3>
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label for="tagessatz">Tagessatz (EUR)</label>
+                            <input type="number" id="tagessatz" value="1200" min="0" oninput="calculatePricing()">
+                        </div>
+                        <div class="input-group">
+                            <label for="rabatt">Rabatt (%)</label>
+                            <input type="number" id="rabatt" value="10" min="0" max="100" oninput="calculatePricing()">
+                        </div>
+                        <div class="input-group">
+                            <label for="zusatzkosten">Zusatzkosten (EUR)</label>
+                            <input type="number" id="zusatzkosten" value="500" min="0" oninput="calculatePricing()">
+                        </div>
+                    </div>
+
+                    <div class="pricing-summary">
+                        <div class="summary-row">
+                            <span>Gesamt Tage</span>
+                            <span id="total-days">0 Tage</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Zwischensumme</span>
+                            <span id="subtotal">0 EUR</span>
+                        </div>
+                        <div class="summary-row discount">
+                            <span>Rabatt (<span id="discount-percent">0</span>%)</span>
+                            <span id="discount-amount">-0 EUR</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Zusatzkosten</span>
+                            <span id="extra-costs">0 EUR</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Gesamtpreis</span>
+                            <span class="summary-value" id="total-price">0 EUR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Tipp</h4>
+                    <p>Passe die Tage pro Phase an, um verschiedene Projektszenarien durchzuspielen. Der Rabatt wird auf die Zwischensumme angewendet.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Active Navigation
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - sectionHeight / 3) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navSidebar = document.getElementById('navSidebar');
+
+        menuToggle.addEventListener('click', () => {
+            navSidebar.classList.toggle('open');
+        });
+
+        // Close menu on link click (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    navSidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Tabs
+        function switchTab(event, tabId) {
+            const tabBtns = event.target.parentElement.querySelectorAll('.tab-btn');
+            const tabPanels = event.target.closest('.tabs').querySelectorAll('.tab-panel');
+
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabPanels.forEach(panel => panel.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            const sections = document.querySelectorAll('section');
+            const currentSection = [...sections].findIndex(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 100;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentSection < sections.length - 1) {
+                    sections[currentSection + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSection > 0) {
+                    sections[currentSection - 1].scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    sections[0].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            updateActiveNav();
+        });
+
+        updateProgressBar();
+        updateActiveNav();
+
+        // ROI Calculator
+        function calculateROI() {
+            const mitarbeiter = parseInt(document.getElementById('mitarbeiter').value) || 0;
+            const stundenProWoche = parseFloat(document.getElementById('stunden').value) || 0;
+            const stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
+            const implementierung = parseFloat(document.getElementById('implementierung').value) || 0;
+            const monatlicheKosten = parseFloat(document.getElementById('monatlich').value) || 0;
+            const automatisierungsgrad = 0.8;
+
+            const wochenProJahr = 48;
+            const stundenProJahr = mitarbeiter * stundenProWoche * wochenProJahr;
+            const aktuelleKosten = stundenProJahr * stundensatz;
+            const jaehrlicheEinsparung = aktuelleKosten * automatisierungsgrad;
+            const jaehrlicheBetriebskosten = monatlicheKosten * 12;
+            const nettoEinsparung = jaehrlicheEinsparung - jaehrlicheBetriebskosten;
+
+            const roiProzent = implementierung > 0 ? (nettoEinsparung / implementierung) * 100 : 0;
+            const amortisationMonate = nettoEinsparung > 0 ? (implementierung / nettoEinsparung) * 12 : 0;
+
+            // Update UI
+            document.getElementById('aktuelle-kosten').textContent = aktuelleKosten.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('einsparung').textContent = nettoEinsparung.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('roi').textContent = roiProzent.toLocaleString('de-DE', {maximumFractionDigits: 0}) + '%';
+            document.getElementById('amortisation').textContent = amortisationMonate.toFixed(1) + ' Monate';
+        }
+
+        // Initial calculation
+        calculateROI();
+
+        // Pricing Calculator
+        function calculatePricing() {
+            const tagessatz = parseFloat(document.getElementById('tagessatz').value) || 0;
+            const rabatt = parseFloat(document.getElementById('rabatt').value) || 0;
+            const zusatzkosten = parseFloat(document.getElementById('zusatzkosten').value) || 0;
+
+            // Phase days
+            const phase1 = parseFloat(document.getElementById('phase1').value) || 0;
+            const phase2 = parseFloat(document.getElementById('phase2').value) || 0;
+            const phase3 = parseFloat(document.getElementById('phase3').value) || 0;
+            const phase4 = parseFloat(document.getElementById('phase4').value) || 0;
+
+            // Calculate costs per phase
+            const cost1 = phase1 * tagessatz;
+            const cost2 = phase2 * tagessatz;
+            const cost3 = phase3 * tagessatz;
+            const cost4 = phase4 * tagessatz;
+
+            // Update phase costs
+            document.getElementById('cost1').textContent = cost1.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('cost2').textContent = cost2.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('cost3').textContent = cost3.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('cost4').textContent = cost4.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+
+            // Totals
+            const totalDays = phase1 + phase2 + phase3 + phase4;
+            const subtotal = totalDays * tagessatz;
+            const discountAmount = subtotal * (rabatt / 100);
+            const totalPrice = subtotal - discountAmount + zusatzkosten;
+
+            // Update summary
+            document.getElementById('total-days').textContent = totalDays.toLocaleString('de-DE') + ' Tage';
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('discount-percent').textContent = rabatt.toLocaleString('de-DE');
+            document.getElementById('discount-amount').textContent = '-' + discountAmount.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('extra-costs').textContent = zusatzkosten.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+            document.getElementById('total-price').textContent = totalPrice.toLocaleString('de-DE', {maximumFractionDigits: 0}) + ' EUR';
+        }
+
+        // Initial calculation
+        calculatePricing();
+    </script>
+</body>
+</html>
