@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentations Skill - Professionelle HTML-Prasentationen mit Claude</title>
+    <style>
+        :root {
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --bg-color: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(148, 163, 184, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            --gradient-secondary: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Navigation */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .nav-number {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 1.5rem;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1002;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .menu-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px var(--shadow-color);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-lang {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .copy-btn.copied {
+            color: #10b981;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        /* Inline code */
+        p code, li code {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--accent-tertiary);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        li::marker {
+            color: var(--accent-primary);
+        }
+
+        /* Accordion */
+        .accordion {
+            margin: 1.5rem 0;
+        }
+
+        .accordion-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav-sidebar,
+            .menu-toggle,
+            .progress-bar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            section {
+                page-break-after: always;
+                min-height: auto;
+            }
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Step Numbers */
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+    </button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <a href="#intro" class="nav-logo">Presentations Skill</a>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#intro" class="nav-link active">
+                    <span class="nav-number">01</span>
+                    Einfuhrung
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#problem" class="nav-link">
+                    <span class="nav-number">02</span>
+                    Das Problem
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#solution" class="nav-link">
+                    <span class="nav-number">03</span>
+                    Die Losung
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#requirements" class="nav-link">
+                    <span class="nav-number">04</span>
+                    Voraussetzungen
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#github-setup" class="nav-link">
+                    <span class="nav-number">05</span>
+                    GitHub Setup
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#claude-setup" class="nav-link">
+                    <span class="nav-number">06</span>
+                    Claude Setup
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#workflow" class="nav-link">
+                    <span class="nav-number">07</span>
+                    Workflow
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#first-presentation" class="nav-link">
+                    <span class="nav-number">08</span>
+                    Erste Prasentation
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#best-practices" class="nav-link">
+                    <span class="nav-number">09</span>
+                    Best Practices
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#troubleshooting" class="nav-link">
+                    <span class="nav-number">10</span>
+                    Troubleshooting
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#advanced" class="nav-link">
+                    <span class="nav-number">11</span>
+                    Erweitert
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#contact" class="nav-link">
+                    <span class="nav-number">12</span>
+                    Kontakt
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <!-- Section 1: Introduction -->
+        <section id="intro">
+            <div class="section-inner">
+                <h1 class="animate-fade-in-up">
+                    Professionelle Prasentationen mit <span class="gradient-text">Claude AI</span>
+                </h1>
+                <p class="subtitle animate-fade-in-up">
+                    Erstelle beeindruckende HTML-Prasentationen in Sekunden - ohne PowerPoint, ohne Design-Kenntnisse.
+                </p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9889;</div>
+                        <h3 class="feature-title">Blitzschnell</h3>
+                        <p class="feature-desc">Von der Idee zur fertigen Prasentation in unter einer Minute.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3 class="feature-title">Professionelles Design</h3>
+                        <p class="feature-desc">Konsistente, moderne Styles ohne Design-Expertise.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127760;</div>
+                        <h3 class="feature-title">Sofort Online</h3>
+                        <p class="feature-desc">Automatisches Publishing uber GitHub Pages.</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="#github-setup" class="btn btn-primary">Jetzt starten &#8594;</a>
+                    <a href="#solution" class="btn btn-secondary">Mehr erfahren</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Problem -->
+        <section id="problem">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Das Problem</span> mit traditionellen Prasentationen</h2>
+                <div class="glass-card">
+                    <h3>PowerPoint-Frustration</h3>
+                    <ul>
+                        <li>Stundenlange Formatierung fur konsistentes Design</li>
+                        <li>Versionskonflikte bei Teamarbeit</li>
+                        <li>Eingeschrankte Interaktivitat</li>
+                        <li>Grosse Dateien, schwer zu teilen</li>
+                        <li>Nicht responsiv fur mobile Gerate</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Der typische Workflow</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4 class="timeline-title">Inhalt erstellen</h4>
+                            <p>Text schreiben, Struktur uberlegen</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="timeline-title">Design kampf</h4>
+                            <p>Farben, Fonts, Layouts anpassen</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="timeline-title">Export-Chaos</h4>
+                            <p>PDF, PPTX, Google Slides - was funktioniert?</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="timeline-title">Teilen</h4>
+                            <p>Email-Anhange, Cloud-Links, Kompatibilitatsprobleme</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Solution -->
+        <section id="solution">
+            <div class="section-inner">
+                <h2>Die <span class="gradient-text">Losung</span>: HTML-Prasentationen mit Claude</h2>
+                <p class="subtitle">Ein einziger Prompt. Eine fertige Prasentation. Automatisch online.</p>
+
+                <div class="highlight-box">
+                    <h4>Der neue Workflow</h4>
+                    <p><span class="step-number">1</span> Beschreibe deine Prasentation in naturlicher Sprache</p>
+                    <p><span class="step-number">2</span> Claude generiert professionelles HTML/CSS/JS</p>
+                    <p><span class="step-number">3</span> Automatischer Push zu GitHub Pages</p>
+                    <p><span class="step-number">4</span> Teile einen Link - fertig!</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h3 class="feature-title">Keine Software notig</h3>
+                        <p class="feature-desc">Kein PowerPoint, kein Google Slides. Nur ein Browser.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128241;</div>
+                        <h3 class="feature-title">Responsive</h3>
+                        <p class="feature-desc">Perfekt auf Desktop, Tablet und Smartphone.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9999;</div>
+                        <h3 class="feature-title">Versionskontrolle</h3>
+                        <p class="feature-desc">Git-Historie fur alle Anderungen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9889;</div>
+                        <h3 class="feature-title">Interaktiv</h3>
+                        <p class="feature-desc">Animationen, Accordions, Tabs - alles moglich.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Requirements -->
+        <section id="requirements">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Voraussetzungen</span></h2>
+                <div class="glass-card">
+                    <h3>Was du brauchst</h3>
+                    <ul>
+                        <li><strong>GitHub Account</strong> - Kostenlos auf github.com</li>
+                        <li><strong>Claude Pro/Team</strong> - Fur Custom Skills und GitHub-Integration</li>
+                        <li><strong>5 Minuten Zeit</strong> - Fur die einmalige Einrichtung</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Empfohlen</h3>
+                    <ul>
+                        <li>Grundlegendes Verstandnis von Git (hilfreich, aber nicht zwingend)</li>
+                        <li>Ein Thema fur deine erste Prasentation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: GitHub Setup -->
+        <section id="github-setup">
+            <div class="section-inner">
+                <h2><span class="gradient-text">GitHub</span> Setup</h2>
+
+                <div class="glass-card">
+                    <h3><span class="step-number">1</span> Repository erstellen</h3>
+                    <p>Erstelle ein neues Repository auf GitHub:</p>
+                    <ul>
+                        <li>Name: z.B. <code>presentations</code> oder <code>slides</code></li>
+                        <li>Visibility: Public (fur GitHub Pages)</li>
+                        <li>README hinzufugen: Optional</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3><span class="step-number">2</span> GitHub Pages aktivieren</h3>
+                    <p>In den Repository-Einstellungen:</p>
+                    <ul>
+                        <li>Gehe zu <strong>Settings</strong> &#8594; <strong>Pages</strong></li>
+                        <li>Source: <strong>Deploy from a branch</strong></li>
+                        <li>Branch: <strong>main</strong>, Folder: <strong>/ (root)</strong></li>
+                        <li>Save</li>
+                    </ul>
+                    <p>Deine URL wird sein: <code>https://[username].github.io/[repo-name]/</code></p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Tipp</h4>
+                    <p>Du kannst mehrere Prasentationen im selben Repository haben. Jede Prasentation bekommt ihren eigenen Ordner und ist unter <code>/ordnername/</code> erreichbar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Claude Setup -->
+        <section id="claude-setup">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Claude</span> Skill einrichten</h2>
+
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" onclick="switchTab(event, 'web')">Claude.ai Web</button>
+                        <button class="tab-btn" onclick="switchTab(event, 'cli')">Claude CLI</button>
+                    </div>
+
+                    <div id="web" class="tab-panel active">
+                        <div class="glass-card">
+                            <h3><span class="step-number">1</span> GitHub verbinden</h3>
+                            <p>In Claude.ai:</p>
+                            <ul>
+                                <li>Offne die Einstellungen (Zahnrad-Icon)</li>
+                                <li>Gehe zu <strong>Connected Apps</strong></li>
+                                <li>Verbinde deinen GitHub Account</li>
+                                <li>Wahle das Repository aus</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card">
+                            <h3><span class="step-number">2</span> Custom Skill erstellen</h3>
+                            <p>Erstelle einen neuen Skill mit folgendem Inhalt:</p>
+                        </div>
+                    </div>
+
+                    <div id="cli" class="tab-panel">
+                        <div class="glass-card">
+                            <h3><span class="step-number">1</span> Repository klonen</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="copy-btn" onclick="copyCode(this)">Kopieren</button>
+                                </div>
+                                <pre><code>git clone https://github.com/[username]/presentations.git
+cd presentations</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="glass-card">
+                            <h3><span class="step-number">2</span> Claude Code starten</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="copy-btn" onclick="copyCode(this)">Kopieren</button>
+                                </div>
+                                <pre><code>claude</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Skill-Anweisungen</h3>
+                    <p>Kopiere diese Anweisungen in deinen Custom Skill:</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">markdown</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Kopieren</button>
+                        </div>
+                        <pre><code># Presentation Skill
+
+Du erstellst professionelle HTML-Prasentationen.
+
+## Design-Prinzipien
+- Dark Mode mit Glassmorphism-Effekten
+- Responsive fur alle Bildschirmgrossen
+- Keyboard-Navigation (Pfeiltasten)
+- Sidebar-Navigation mit Fortschrittsanzeige
+
+## Technische Anforderungen
+- Single HTML file (inline CSS/JS)
+- Keine externen Dependencies
+- Vanilla JavaScript nur
+- CSS Variables fur einfache Anpassung
+
+## Struktur
+- Jede Section = 100vh (ein "Slide")
+- Glassmorphism Cards fur Inhalte
+- Gradient-Texte fur Uberschriften
+- Feature-Grids fur Listen
+- Code-Blocks mit Copy-Funktion
+- Accordions fur FAQs
+- Timeline fur Ablaufe
+
+## Workflow
+1. User beschreibt Prasentation
+2. Du erstellst komplette HTML-Datei
+3. Speichere als index.html (oder [name].html)
+4. Commit und Push zu GitHub</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Workflow -->
+        <section id="workflow">
+            <div class="section-inner">
+                <h2>Der <span class="gradient-text">Workflow</span></h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">1. Prompt formulieren</h4>
+                        <p>Beschreibe deine Prasentation klar und deutlich. Je mehr Details, desto besser das Ergebnis.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">2. Claude generiert</h4>
+                        <p>Claude erstellt eine komplette HTML-Datei mit CSS und JavaScript.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">3. Review und Feedback</h4>
+                        <p>Prufe das Ergebnis. Bitte um Anderungen falls notig.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">4. Automatischer Push</h4>
+                        <p>Claude pusht die Datei zu GitHub. GitHub Pages deployt automatisch.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">5. Teilen</h4>
+                        <p>Teile den Link zu deiner Prasentation!</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Beispiel-Prompt</h4>
+                    <p>"Erstelle eine Prasentation uber Machine Learning fur Einsteiger. 8 Slides: Einfuhrung, Was ist ML, Arten von ML, Supervised Learning, Unsupervised Learning, Anwendungsbeispiele, Wie anfangen, Ressourcen."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: First Presentation -->
+        <section id="first-presentation">
+            <div class="section-inner">
+                <h2>Deine <span class="gradient-text">erste Prasentation</span></h2>
+
+                <div class="glass-card">
+                    <h3>Beispiel-Prompts zum Starten</h3>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Firmen-Prasentation
+                                <span class="accordion-icon">&#9660;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>"Erstelle eine Prasentation fur unser Startup [Name]. Slides: Vision, Problem, Losung, Markt, Geschaftsmodell, Team, Traction, Ask."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Technisches Tutorial
+                                <span class="accordion-icon">&#9660;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>"Erstelle ein Tutorial uber Docker fur Entwickler. Slides: Was ist Docker, Warum Container, Installation, Erste Schritte, Dockerfile, Docker Compose, Best Practices, Nachste Schritte."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Schulungsmaterial
+                                <span class="accordion-icon">&#9660;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>"Erstelle eine Schulung fur neue Mitarbeiter zum Thema IT-Sicherheit. Slides: Warum wichtig, Passworter, Phishing, Social Engineering, sicheres Arbeiten, Melden von Vorfallen, Quiz, Zusammenfassung."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Best Practices -->
+        <section id="best-practices">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Best Practices</span></h2>
+
+                <div class="feature-grid">
+                    <div class="glass-card">
+                        <h3>Gute Prompts</h3>
+                        <ul>
+                            <li>Klare Struktur vorgeben</li>
+                            <li>Zielgruppe nennen</li>
+                            <li>Gewunschten Ton angeben</li>
+                            <li>Beispiele nennen wenn moglich</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Iterieren</h3>
+                        <ul>
+                            <li>Erst Struktur, dann Details</li>
+                            <li>Feedback geben</li>
+                            <li>Schrittweise verfeinern</li>
+                            <li>Anderungen benennen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Pro-Tipp</h4>
+                    <p>Speichere gute Prompts als Templates fur zukunftige Prasentationen!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Troubleshooting -->
+        <section id="troubleshooting">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Troubleshooting</span></h2>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            GitHub Pages zeigt 404
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>Prufe ob GitHub Pages aktiviert ist</li>
+                                    <li>Warte 1-2 Minuten nach dem Push</li>
+                                    <li>Stelle sicher, dass die Datei <code>index.html</code> heisst</li>
+                                    <li>Prufe die Branch-Einstellungen</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Styles werden nicht geladen
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>CSS sollte inline im <code>&lt;style&gt;</code> Tag sein</li>
+                                    <li>Keine externen CSS-Dateien verwenden</li>
+                                    <li>Browser-Cache leeren</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Navigation funktioniert nicht
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>Prufe ob Section-IDs korrekt sind</li>
+                                    <li>JavaScript-Konsole auf Fehler prufen</li>
+                                    <li>Scroll-Behavior prufen</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 11: Advanced -->
+        <section id="advanced">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Erweiterte</span> Techniken</h2>
+
+                <div class="glass-card">
+                    <h3>Custom Themes</h3>
+                    <p>Passe die CSS-Variablen an fur eigene Farbschemas:</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">css</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Kopieren</button>
+                        </div>
+                        <pre><code>:root {
+    --accent-primary: #10b981;  /* Grun */
+    --accent-secondary: #06b6d4; /* Cyan */
+    --bg-color: #0a0a0a;        /* Schwarz */
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Mehrere Prasentationen</h3>
+                    <p>Organisiere dein Repository:</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-lang">text</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Kopieren</button>
+                        </div>
+                        <pre><code>presentations/
+  index.html          # Ubersicht
+  ml-intro/
+    index.html        # ML Prasentation
+  docker-tutorial/
+    index.html        # Docker Tutorial
+  company-pitch/
+    index.html        # Firmen-Pitch</code></pre>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Presenter Mode</h3>
+                    <p>Fugen einen Presenter-Modus hinzu mit Notizen und Timer - frage Claude danach!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 12: Contact -->
+        <section id="contact">
+            <div class="section-inner">
+                <h2>Bereit zu <span class="gradient-text">starten</span>?</h2>
+                <p class="subtitle">Erstelle jetzt deine erste HTML-Prasentation mit Claude!</p>
+
+                <div class="glass-card">
+                    <h3>Nachste Schritte</h3>
+                    <ol>
+                        <li>GitHub Repository erstellen</li>
+                        <li>GitHub Pages aktivieren</li>
+                        <li>Claude Skill einrichten</li>
+                        <li>Erste Prasentation prompten</li>
+                    </ol>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Diese Prasentation</h4>
+                    <p>Diese Prasentation wurde mit genau diesem Workflow erstellt - sie ist der Beweis, dass es funktioniert!</p>
+                </div>
+
+                <div class="btn-group">
+                    <a href="#intro" class="btn btn-primary">&#8593; Zuruck zum Anfang</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Active Navigation
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - sectionHeight / 3) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navSidebar = document.getElementById('navSidebar');
+
+        menuToggle.addEventListener('click', () => {
+            navSidebar.classList.toggle('open');
+        });
+
+        // Close menu when clicking a link (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    navSidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Tabs
+        function switchTab(event, tabId) {
+            const tabBtns = event.target.parentElement.querySelectorAll('.tab-btn');
+            const tabPanels = event.target.closest('.tabs').querySelectorAll('.tab-panel');
+
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabPanels.forEach(panel => panel.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        // Copy Code
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Kopiert!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Kopieren';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            const sections = document.querySelectorAll('section');
+            const currentSection = [...sections].findIndex(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 100;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentSection < sections.length - 1) {
+                    sections[currentSection + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSection > 0) {
+                    sections[currentSection - 1].scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    sections[0].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            updateActiveNav();
+        });
+
+        // Initial calls
+        updateProgressBar();
+        updateActiveNav();
+    </script>
+</body>
+</html>
