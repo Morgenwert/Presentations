@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code - Quick Start Guide</title>
+    <style>
+        :root {
+            --accent-primary: #1e40af;
+            --accent-secondary: #3b82f6;
+            --accent-light: #60a5fa;
+            --accent-orange: #f97316;
+            --accent-orange-light: #fdba74;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent-primary);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-color);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(59, 130, 246, 0.1));
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .nav-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .nav-link.active .nav-number {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 200;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            color: var(--accent-primary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-secondary);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-secondary);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-lang {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        pre {
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--code-text);
+        }
+
+        .inline-code {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th, td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--bg-secondary);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .badge-orange {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .badge-light {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.08), rgba(59, 130, 246, 0.08));
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box.tip {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(253, 186, 116, 0.08));
+            border-left-color: var(--accent-orange);
+        }
+
+        .highlight-box h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box.tip h4 {
+            color: var(--accent-orange);
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .comparison-card.highlight {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.25rem;
+        }
+
+        .comparison-card.highlight .comparison-icon {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .comparison-card:not(.highlight) .comparison-icon {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+        }
+
+        /* Hero Section */
+        #slide-1 {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Command showcase */
+        .command-showcase {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--code-bg);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .command-prompt {
+            color: var(--accent-light);
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        .command-text {
+            color: white;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 1.25rem;
+        }
+
+        /* Levels Diagram */
+        .levels-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .level-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .level-item:hover {
+            border-color: var(--accent-secondary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-number {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .level-content {
+            flex: 1;
+        }
+
+        .level-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .level-path {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+        }
+
+        .level-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .level-badge.git-yes {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .level-badge.git-no {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        /* Arrow between levels */
+        .level-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-logo">Claude Code</div>
+        <div class="nav-subtitle">Quick Start Guide</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#slide-1" class="nav-link active">
+                    <span class="nav-number">1</span>
+                    Introduction
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-2" class="nav-link">
+                    <span class="nav-number">2</span>
+                    Getting Started
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-3" class="nav-link">
+                    <span class="nav-number">3</span>
+                    Three Levels
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-4" class="nav-link">
+                    <span class="nav-number">4</span>
+                    Key Features
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-5" class="nav-link">
+                    <span class="nav-number">5</span>
+                    Extensions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-6" class="nav-link">
+                    <span class="nav-number">6</span>
+                    MCP Servers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-7" class="nav-link">
+                    <span class="nav-number">7</span>
+                    Best Practices
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#slide-8" class="nav-link">
+                    <span class="nav-number">8</span>
+                    Quick Reference
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <!-- Slide 1: Introduction -->
+        <section id="slide-1">
+            <span class="hero-badge">AI Coding Assistant</span>
+            <h1>Claude Code<br><span class="highlight">Quick Start Guide</span></h1>
+            <p class="subtitle">Your AI assistant that works directly in your project - reading code, writing files, and running commands.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">&#128269;</div>
+                    <div class="feature-title">Reads Code</div>
+                    <p class="feature-desc">Understands your entire codebase</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9998;</div>
+                    <div class="feature-title">Writes Files</div>
+                    <p class="feature-desc">Modifies code directly</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9654;</div>
+                    <div class="feature-title">Runs Commands</div>
+                    <p class="feature-desc">Terminal & tests integrated</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128200;</div>
+                    <div class="feature-title">Git Integration</div>
+                    <p class="feature-desc">Commits & PRs built-in</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>The Difference</h4>
+                <p>Regular AI chat gives you code snippets to copy. <strong>Claude Code works directly in your project.</strong></p>
+            </div>
+        </section>
+
+        <!-- Slide 2: Getting Started -->
+        <section id="slide-2">
+            <span class="badge badge-orange">First Steps</span>
+            <h2>Getting Started: The <span class="inline-code">/init</span> Command</h2>
+            <p>When you start Claude Code in a new project, run this command to set everything up:</p>
+
+            <div class="command-showcase">
+                <span class="command-prompt">$</span>
+                <span class="command-text">/init</span>
+            </div>
+
+            <h3>What /init does:</h3>
+            <div class="levels-diagram">
+                <div class="level-item">
+                    <div class="level-number">1</div>
+                    <div class="level-content">
+                        <div class="level-title">Analyzes your project structure</div>
+                        <div class="level-path">Scans files, folders, and dependencies</div>
+                    </div>
+                </div>
+                <div class="level-arrow">&#8595;</div>
+                <div class="level-item">
+                    <div class="level-number">2</div>
+                    <div class="level-content">
+                        <div class="level-title">Creates a CLAUDE.md file</div>
+                        <div class="level-path">Project-specific instructions for Claude</div>
+                    </div>
+                </div>
+                <div class="level-arrow">&#8595;</div>
+                <div class="level-item">
+                    <div class="level-number">3</div>
+                    <div class="level-content">
+                        <div class="level-title">Sets up the foundation</div>
+                        <div class="level-path">Claude now understands your codebase</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box tip">
+                <h4>&#128161; Tip</h4>
+                <p>Run <span class="inline-code">/init</span> whenever you start working on a new repository.</p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Three Levels of CLAUDE.md -->
+        <section id="slide-3">
+            <span class="badge badge-primary">Configuration</span>
+            <h2>The Three Levels of <span class="inline-code">CLAUDE.md</span></h2>
+            <p>Claude Code reads instructions from three locations, with each level overriding the previous:</p>
+
+            <div class="levels-diagram">
+                <div class="level-item">
+                    <div class="level-number">1</div>
+                    <div class="level-content">
+                        <div class="level-title">Global</div>
+                        <div class="level-path">~/.claude/CLAUDE.md</div>
+                    </div>
+                    <span class="level-badge git-no">Not synced</span>
+                </div>
+                <div class="level-arrow">&#8595; overrides</div>
+                <div class="level-item">
+                    <div class="level-number">2</div>
+                    <div class="level-content">
+                        <div class="level-title">Project</div>
+                        <div class="level-path">.claude/CLAUDE.md</div>
+                    </div>
+                    <span class="level-badge git-yes">Git synced</span>
+                </div>
+                <div class="level-arrow">&#8595; overrides</div>
+                <div class="level-item">
+                    <div class="level-number">3</div>
+                    <div class="level-content">
+                        <div class="level-title">Local</div>
+                        <div class="level-path">.claude/CLAUDE.local.md</div>
+                    </div>
+                    <span class="level-badge git-no">Gitignored</span>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <div class="tab-list">
+                    <button class="tab-btn active" data-tab="global">Global</button>
+                    <button class="tab-btn" data-tab="project">Project</button>
+                    <button class="tab-btn" data-tab="local">Local</button>
+                </div>
+                <div class="tab-panel active" id="global">
+                    <div class="card">
+                        <h4>Personal Preferences (All Projects)</h4>
+                        <ul>
+                            <li>Your preferred coding style</li>
+                            <li>Custom agents you use everywhere</li>
+                            <li>Default language preferences</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-panel" id="project">
+                    <div class="card">
+                        <h4>Team Conventions (Shared via Git)</h4>
+                        <ul>
+                            <li>Code style rules (TypeScript, ESLint, etc.)</li>
+                            <li>Architecture guidelines</li>
+                            <li>Team conventions</li>
+                            <li>Important project notes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-panel" id="local">
+                    <div class="card">
+                        <h4>Personal Notes (Not Shared)</h4>
+                        <ul>
+                            <li>Local file paths</li>
+                            <li>Personal experiments</li>
+                            <li>Notes you don't want to share</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Key Features -->
+        <section id="slide-4">
+            <span class="badge badge-primary">Features</span>
+            <h2>Key Features</h2>
+
+            <div class="tabs">
+                <div class="tab-list">
+                    <button class="tab-btn active" data-tab="plan">Plan Mode</button>
+                    <button class="tab-btn" data-tab="think">Think Modes</button>
+                    <button class="tab-btn" data-tab="checkpoint">Checkpoints</button>
+                </div>
+
+                <div class="tab-panel active" id="plan">
+                    <div class="card">
+                        <h3>&#128203; Plan Mode</h3>
+                        <p><strong>When to use:</strong> Before implementing complex features or making architecture decisions.</p>
+                        <h4>How it works:</h4>
+                        <ol>
+                            <li>Claude explores your codebase</li>
+                            <li>Creates a structured plan</li>
+                            <li>You review and approve</li>
+                            <li>Claude implements</li>
+                        </ol>
+                        <div class="highlight-box tip">
+                            <h4>&#128161; Trigger</h4>
+                            <p>Claude often enters Plan Mode automatically, or ask: "Let's plan this before implementing."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="think">
+                    <div class="card">
+                        <h3>&#129504; Think Modes</h3>
+                        <p><strong>When to use:</strong> For debugging difficult problems or understanding complex code.</p>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Command</th>
+                                        <th>Depth</th>
+                                        <th>Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="inline-code">think</span></td>
+                                        <td>Normal</td>
+                                        <td>Standard analysis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="inline-code">think more</span></td>
+                                        <td>Higher</td>
+                                        <td>Complex bugs</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="inline-code">think harder</span></td>
+                                        <td>Deep</td>
+                                        <td>Architecture problems</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="inline-code">ultrathink</span></td>
+                                        <td>Maximum</td>
+                                        <td>Critical decisions</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="checkpoint">
+                    <div class="card">
+                        <h3>&#128190; Checkpoints</h3>
+                        <p>Claude automatically creates snapshots before making changes.</p>
+                        <h4>To undo changes:</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-lang">command</span>
+                            </div>
+                            <pre><code>/checkpoint restore</code></pre>
+                        </div>
+                        <p>Or simply say: <em>"Undo the last changes"</em></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Extensions -->
+        <section id="slide-5">
+            <span class="badge badge-orange">Extensibility</span>
+            <h2>Extending Claude Code</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--accent-secondary);">&#47;</div>
+                    <div class="feature-title">Slash Commands</div>
+                    <p class="feature-desc">Simple predefined prompts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--accent-primary);">&#9733;</div>
+                    <div class="feature-title">Skills</div>
+                    <p class="feature-desc">Complex workflows with tool access</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--accent-orange);">&#128101;</div>
+                    <div class="feature-title">Subagents</div>
+                    <p class="feature-desc">Independent parallel agents</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Slash Commands</th>
+                            <th>Skills</th>
+                            <th>Subagents</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Context</strong></td>
+                            <td>Main</td>
+                            <td>Main</td>
+                            <td>Isolated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parallel</strong></td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Background</strong></td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity</strong></td>
+                            <td>Simple</td>
+                            <td>Medium</td>
+                            <td>Flexible</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <h4>&#128161; Key Benefit of Subagents</h4>
+                <p>Subagents don't fill up your main conversation context - perfect for research and parallel tasks!</p>
+            </div>
+        </section>
+
+        <!-- Slide 6: MCP Servers -->
+        <section id="slide-6">
+            <span class="badge badge-primary">Integrations</span>
+            <h2>MCP Servers - External Integrations</h2>
+            <p><strong>MCP (Model Context Protocol)</strong> lets Claude communicate with external services.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">~/.claude.json</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/folder"]
+    }
+  }
+}</code></pre>
+            </div>
+
+            <h3>Popular MCP Servers</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">&#128193;</div>
+                    <div class="feature-title">server-filesystem</div>
+                    <p class="feature-desc">File access</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128025;</div>
+                    <div class="feature-title">server-github</div>
+                    <p class="feature-desc">GitHub integration</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128172;</div>
+                    <div class="feature-title">server-slack</div>
+                    <p class="feature-desc">Slack messages</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128451;</div>
+                    <div class="feature-title">server-postgres</div>
+                    <p class="feature-desc">Database access</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Best Practices -->
+        <section id="slide-7">
+            <span class="badge badge-orange">Tips</span>
+            <h2>Best Practices</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card highlight">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">&#10004;</div>
+                        <h4>Do</h4>
+                    </div>
+                    <ul>
+                        <li>Be specific about what you want</li>
+                        <li>Mention file paths when relevant</li>
+                        <li>Break complex tasks into steps</li>
+                        <li>Review changes before committing</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">&#10006;</div>
+                        <h4>Don't</h4>
+                    </div>
+                    <ul>
+                        <li>Give vague instructions</li>
+                        <li>Assume Claude knows your context</li>
+                        <li>Ask for everything at once</li>
+                        <li>Blindly accept all changes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>For Saving Context</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Situation</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Research tasks</td>
+                            <td>Use subagents</td>
+                        </tr>
+                        <tr>
+                            <td>Complex planning</td>
+                            <td>Use Plan Mode</td>
+                        </tr>
+                        <tr>
+                            <td>Running out of context</td>
+                            <td>Start fresh conversation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Slide 8: Quick Reference -->
+        <section id="slide-8">
+            <span class="badge badge-primary">Reference</span>
+            <h2>Quick Reference</h2>
+
+            <h3>Essential Commands</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="inline-code">/init</span></td>
+                            <td>Initialize Claude for a new project</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/checkpoint restore</span></td>
+                            <td>Undo recent changes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/help</span></td>
+                            <td>Show available commands</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/clear</span></td>
+                            <td>Clear conversation context</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/compact</span></td>
+                            <td>Summarize conversation to save context</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>When to Use What</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Starting a new project</td>
+                            <td><span class="inline-code">/init</span></td>
+                        </tr>
+                        <tr>
+                            <td>Recurring prompts</td>
+                            <td>Slash Commands</td>
+                        </tr>
+                        <tr>
+                            <td>Complex workflows</td>
+                            <td>Skills</td>
+                        </tr>
+                        <tr>
+                            <td>Parallel/background tasks</td>
+                            <td>Subagents</td>
+                        </tr>
+                        <tr>
+                            <td>External service integration</td>
+                            <td>MCP Servers</td>
+                        </tr>
+                        <tr>
+                            <td>Planning before implementation</td>
+                            <td>Plan Mode</td>
+                        </tr>
+                        <tr>
+                            <td>Deep problem analysis</td>
+                            <td>Think Modes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <h4>&#128279; Resources</h4>
+                <p>
+                    <strong>Official Docs:</strong> docs.anthropic.com/claude-code<br>
+                    <strong>GitHub:</strong> github.com/anthropics/claude-code
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Active Navigation
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Scroll Events
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            updateActiveNav();
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navSidebar = document.getElementById('navSidebar');
+
+        menuToggle.addEventListener('click', () => {
+            navSidebar.classList.toggle('open');
+        });
+
+        // Close menu on link click (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    navSidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            const sections = document.querySelectorAll('section');
+            const currentSection = Array.from(sections).findIndex(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 300;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                const nextSection = sections[Math.min(currentSection + 1, sections.length - 1)];
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const prevSection = sections[Math.max(currentSection - 1, 0)];
+                prevSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabGroup = btn.closest('.tabs');
+                const tabId = btn.getAttribute('data-tab');
+
+                // Update buttons
+                tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update panels
+                tabGroup.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === tabId) {
+                        panel.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Copy Code
+        function copyCode(btn) {
+            const codeBlock = btn.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Initial state
+        updateProgressBar();
+        updateActiveNav();
+    </script>
+</body>
+</html>
