@@ -803,15 +803,28 @@
         <!-- Slide 2: Getting Started -->
         <section id="slide-2">
             <span class="badge badge-orange">First Steps</span>
-            <h2>Getting Started: The <span class="inline-code">/init</span> Command</h2>
-            <p>When you start Claude Code in a new project, run this command to set everything up:</p>
+            <h2>Getting Started: <span class="highlight">Essential Commands</span></h2>
+            <p>Three commands you'll use regularly to manage your Claude Code sessions:</p>
 
-            <div class="command-showcase">
-                <span class="command-prompt">$</span>
-                <span class="command-text">/init</span>
+            <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="feature-card">
+                    <div class="feature-icon">&#128640;</div>
+                    <div class="feature-title" style="font-family: 'Monaco', 'Menlo', monospace;">/init</div>
+                    <p class="feature-desc">Initialize a new project. Analyzes structure and creates a CLAUDE.md file.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--accent-orange);">&#128259;</div>
+                    <div class="feature-title" style="font-family: 'Monaco', 'Menlo', monospace;">/clear</div>
+                    <p class="feature-desc">Reset the conversation. Start fresh when switching to a different task.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: var(--accent-secondary);">&#128230;</div>
+                    <div class="feature-title" style="font-family: 'Monaco', 'Menlo', monospace;">/compact</div>
+                    <p class="feature-desc">Summarize the conversation to free up context window space.</p>
+                </div>
             </div>
 
-            <h3>What /init does:</h3>
+            <h3>What <span class="inline-code">/init</span> does:</h3>
             <div class="levels-diagram">
                 <div class="level-item">
                     <div class="level-number">1</div>
@@ -840,7 +853,7 @@
 
             <div class="highlight-box tip">
                 <h4>&#128161; Tip</h4>
-                <p>Run <span class="inline-code">/init</span> whenever you start working on a new repository.</p>
+                <p>Use <span class="inline-code">/compact</span> proactively during long sessions to avoid running out of context. Use <span class="inline-code">/clear</span> when you're done with one task and starting something unrelated.</p>
             </div>
         </section>
 
@@ -1163,16 +1176,20 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>Context filling up during a task</td>
+                            <td>Use <span class="inline-code">/compact</span> to summarize and free space</td>
+                        </tr>
+                        <tr>
+                            <td>Switching to a different task</td>
+                            <td>Use <span class="inline-code">/clear</span> to start fresh</td>
+                        </tr>
+                        <tr>
                             <td>Research tasks</td>
                             <td>Use subagents</td>
                         </tr>
                         <tr>
                             <td>Complex planning</td>
                             <td>Use Plan Mode</td>
-                        </tr>
-                        <tr>
-                            <td>Running out of context</td>
-                            <td>Start fresh conversation</td>
                         </tr>
                     </tbody>
                 </table>
