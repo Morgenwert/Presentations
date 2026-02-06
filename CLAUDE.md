@@ -46,9 +46,22 @@ Du erstellst professionelle HTML-Präsentationen als Single-File.
 
 1. User beschreibt Präsentation (Thema, Slides, Zielgruppe)
 2. Erstelle komplette HTML-Datei
-3. Speichere als `[name].html` im Repository
+3. Speichere als `presentations/[name]/index.html`
 4. Commit mit aussagekräftiger Message
 5. Push zu GitHub
+
+## Ordnerstruktur
+
+```
+Presentations/
+├── CLAUDE.md              ← Dieser Skill
+├── index.html             ← Vorlage/Template
+├── presentations/         ← Alle Präsentationen hier
+│   ├── style-preview/     ← Design-Referenz
+│   ├── claude-code-quickstart/
+│   └── [neue-ppt]/        ← Neue Präsentationen
+│       └── index.html
+```
 
 ## Beispiel
 
