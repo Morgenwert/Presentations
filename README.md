@@ -39,7 +39,7 @@ Bei Bedarf kannst du folgende Elemente anfordern:
 - **ROI-Rechner** - Return on Investment berechnen
 - **Preiskalkulator** - Projektkosten kalkulieren
 
-Alle Elemente siehst du live in der [Style Preview](style-preview/index.html).
+Alle Elemente siehst du live in der [Style Preview](presentations/style-preview/index.html).
 
 ## Kunden-Präsentationen
 
@@ -52,19 +52,20 @@ Wenn du sagst "für Kunde XY", fragt Claude nach:
 
 ```
 Presentations/
-├── index.html              # Landing Page
-├── style-preview/          # Design-Vorschau
-│   └── index.html
-├── ki-kundenservice/       # Beispiel-Präsentation
-│   └── index.html
-└── README.md               # Diese Datei
+├── CLAUDE.md               # Skill-Anweisungen
+├── index.html              # Vorlage/Template
+├── README.md               # Diese Datei
+└── presentations/          # Alle Präsentationen
+    ├── style-preview/      # Design-Vorschau
+    ├── claude-code-quickstart/
+    └── [neue-ppt]/         # Neue Präsentationen hier
 ```
 
 ## Live URLs
 
 Nach dem Push ist die Präsentation erreichbar unter:
 ```
-https://morgenwert.github.io/Presentations/[ordner-name]/
+https://morgenwert.github.io/Presentations/presentations/[ordner-name]/
 ```
 
 ## Style Preview
@@ -73,8 +74,8 @@ Die komplette Design-Vorschau mit allen Elementen und Rechnern:
 
 | Version | Link |
 |---------|------|
-| Lokal | [style-preview/index.html](style-preview/index.html) |
-| Online | [morgenwert.github.io/Presentations/style-preview/](https://morgenwert.github.io/Presentations/style-preview/) |
+| Lokal | [presentations/style-preview/index.html](presentations/style-preview/index.html) |
+| Online | [morgenwert.github.io/Presentations/presentations/style-preview/](https://morgenwert.github.io/Presentations/presentations/style-preview/) |
 
 Enthält: Cards, Tabs, Accordions, Timeline, Statistiken, ROI-Rechner, Preiskalkulator
 

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentations Skill - Professional HTML Presentations with Claude</title>
+    <style>
+        :root {
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(226, 232, 240, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --gradient-primary: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            --gradient-secondary: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(148, 163, 184, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--gradient-primary); z-index: 1001; transition: width 0.1s ease-out; }
+        .nav-sidebar { position: fixed; left: 0; top: 0; width: 280px; height: 100vh; background: var(--glass-bg); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); padding: 2rem 1.5rem; overflow-y: auto; z-index: 1000; transition: transform 0.3s ease; }
+        .nav-logo { font-size: 1.5rem; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem; display: block; }
+        .nav-list { list-style: none; }
+        .nav-item { margin-bottom: 0.5rem; }
+        .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 8px; transition: all 0.2s ease; font-size: 0.95rem; }
+        .nav-link:hover, .nav-link.active { background: var(--bg-tertiary); color: var(--text-primary); }
+        .nav-link.active { border-left: 3px solid var(--accent-primary); }
+        .nav-number { font-size: 0.75rem; color: var(--text-muted); min-width: 1.5rem; }
+
+        .theme-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 1002; background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 50%; width: 44px; height: 44px; cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 2px 8px var(--shadow-color); }
+        .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent-primary); }
+        .theme-toggle .icon-sun, .theme-toggle .icon-moon { width: 20px; height: 20px; transition: opacity 0.3s ease; }
+        .theme-toggle .icon-sun { display: none; }
+        .theme-toggle .icon-moon { display: block; }
+        [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+        [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+        .menu-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 1002; background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; cursor: pointer; color: var(--text-primary); }
+        .menu-toggle svg { width: 24px; height: 24px; }
+
+        .main-content { margin-left: 280px; min-height: 100vh; }
+        section { min-height: 100vh; padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--border-color); }
+        .section-inner { max-width: 900px; margin: 0 auto; width: 100%; }
+
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 1.5rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .gradient-text { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px; }
+        p { color: var(--text-secondary); margin-bottom: 1rem; }
+
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .glass-card:hover { transform: translateY(-2px); box-shadow: 0 20px 40px var(--shadow-color); }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .feature-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; }
+        .feature-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); }
+        .feature-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem; }
+        .feature-title { color: var(--text-primary); margin-bottom: 0.5rem; }
+        .feature-desc { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .code-block { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; margin: 1.5rem 0; }
+        .code-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); }
+        .code-lang { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+        .copy-btn { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; transition: all 0.2s ease; }
+        .copy-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+        .copy-btn.copied { color: #10b981; }
+        pre { padding: 1.5rem; overflow-x: auto; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; }
+        code { font-family: 'SF Mono', 'Fira Code', monospace; }
+        p code, li code { background: var(--bg-tertiary); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.85em; color: var(--accent-tertiary); }
+
+        .timeline { position: relative; padding-left: 2rem; margin: 2rem 0; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gradient-primary); }
+        .timeline-item { position: relative; padding-bottom: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -2rem; top: 0.5rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-primary); transform: translateX(-50%); }
+        .timeline-title { color: var(--text-primary); margin-bottom: 0.5rem; }
+
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
+        .btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-secondary); border-color: var(--accent-primary); }
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; }
+        li { color: var(--text-secondary); margin-bottom: 0.5rem; }
+        li::marker { color: var(--accent-primary); }
+
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; }
+        .accordion-header { width: 100%; padding: 1.25rem 1.5rem; background: transparent; border: none; color: var(--text-primary); font-size: 1rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s ease; }
+        .accordion-header:hover { background: var(--bg-tertiary); }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-item.open .accordion-icon { transform: rotate(180deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-item.open .accordion-content { max-height: 500px; }
+        .accordion-body { padding: 0 1.5rem 1.5rem; }
+
+        .tabs { margin: 2rem 0; }
+        .tab-list { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+        .tab-btn { padding: 0.75rem 1.25rem; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 0.95rem; position: relative; transition: color 0.2s ease; }
+        .tab-btn:hover, .tab-btn.active { color: var(--text-primary); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--gradient-primary); }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.6s ease forwards; }
+        .animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+
+        @media (max-width: 1024px) {
+            .nav-sidebar { transform: translateX(-100%); }
+            .nav-sidebar.open { transform: translateX(0); }
+            .menu-toggle { display: block; }
+            .main-content { margin-left: 0; }
+            section { padding: 3rem 1.5rem; }
+        }
+        @media (max-width: 640px) {
+            section { padding: 2rem 1rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+        @media print {
+            .nav-sidebar, .menu-toggle, .progress-bar { display: none; }
+            .main-content { margin-left: 0; }
+            section { page-break-after: always; min-height: auto; }
+        }
+
+        .highlight-box { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .highlight-box h4 { color: var(--accent-primary); margin-bottom: 0.75rem; }
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; font-weight: 700; font-size: 0.9rem; margin-right: 0.75rem; color: white; }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+    </button>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+    </button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <a href="#intro" class="nav-logo">Presentations Skill</a>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#intro" class="nav-link active"><span class="nav-number">01</span>Introduction</a></li>
+            <li class="nav-item"><a href="#problem" class="nav-link"><span class="nav-number">02</span>The Problem</a></li>
+            <li class="nav-item"><a href="#solution" class="nav-link"><span class="nav-number">03</span>The Solution</a></li>
+            <li class="nav-item"><a href="#requirements" class="nav-link"><span class="nav-number">04</span>Requirements</a></li>
+            <li class="nav-item"><a href="#github-setup" class="nav-link"><span class="nav-number">05</span>GitHub Setup</a></li>
+            <li class="nav-item"><a href="#claude-setup" class="nav-link"><span class="nav-number">06</span>Claude Setup</a></li>
+            <li class="nav-item"><a href="#workflow" class="nav-link"><span class="nav-number">07</span>Workflow</a></li>
+            <li class="nav-item"><a href="#first-presentation" class="nav-link"><span class="nav-number">08</span>First Presentation</a></li>
+            <li class="nav-item"><a href="#best-practices" class="nav-link"><span class="nav-number">09</span>Best Practices</a></li>
+            <li class="nav-item"><a href="#troubleshooting" class="nav-link"><span class="nav-number">10</span>Troubleshooting</a></li>
+            <li class="nav-item"><a href="#advanced" class="nav-link"><span class="nav-number">11</span>Advanced</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link"><span class="nav-number">12</span>Get Started</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <section id="intro">
+            <div class="section-inner">
+                <h1 class="animate-fade-in-up">Professional Presentations with <span class="gradient-text">Claude AI</span></h1>
+                <p class="subtitle animate-fade-in-up">Create stunning HTML presentations in seconds - no PowerPoint, no design skills needed.</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9889;</div>
+                        <h3 class="feature-title">Lightning Fast</h3>
+                        <p class="feature-desc">From idea to finished presentation in under a minute.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3 class="feature-title">Professional Design</h3>
+                        <p class="feature-desc">Consistent, modern styles without design expertise.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127760;</div>
+                        <h3 class="feature-title">Instantly Online</h3>
+                        <p class="feature-desc">Automatic publishing via GitHub Pages.</p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a href="#github-setup" class="btn btn-primary">Get Started &#8594;</a>
+                    <a href="#solution" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem">
+            <div class="section-inner">
+                <h2><span class="gradient-text">The Problem</span> with Traditional Presentations</h2>
+                <div class="glass-card">
+                    <h3>PowerPoint Frustration</h3>
+                    <ul>
+                        <li>Hours of formatting for consistent design</li>
+                        <li>Version conflicts in team collaboration</li>
+                        <li>Limited interactivity</li>
+                        <li>Large files, hard to share</li>
+                        <li>Not responsive for mobile devices</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>The Typical Workflow</h3>
+                    <div class="timeline">
+                        <div class="timeline-item"><h4 class="timeline-title">Create Content</h4><p>Write text, plan structure</p></div>
+                        <div class="timeline-item"><h4 class="timeline-title">Design Struggle</h4><p>Adjust colors, fonts, layouts</p></div>
+                        <div class="timeline-item"><h4 class="timeline-title">Export Chaos</h4><p>PDF, PPTX, Google Slides - what works?</p></div>
+                        <div class="timeline-item"><h4 class="timeline-title">Sharing</h4><p>Email attachments, cloud links, compatibility issues</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution">
+            <div class="section-inner">
+                <h2>The <span class="gradient-text">Solution</span>: HTML Presentations with Claude</h2>
+                <p class="subtitle">One prompt. One finished presentation. Automatically online.</p>
+                <div class="highlight-box">
+                    <h4>The New Workflow</h4>
+                    <p><span class="step-number">1</span> Describe your presentation in natural language</p>
+                    <p><span class="step-number">2</span> Claude generates professional HTML/CSS/JS</p>
+                    <p><span class="step-number">3</span> Automatic push to GitHub Pages</p>
+                    <p><span class="step-number">4</span> Share a link - done!</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card"><div class="feature-icon">&#128736;</div><h3 class="feature-title">No Software Needed</h3><p class="feature-desc">No PowerPoint, no Google Slides. Just a browser.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#128241;</div><h3 class="feature-title">Responsive</h3><p class="feature-desc">Perfect on desktop, tablet, and smartphone.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#9999;</div><h3 class="feature-title">Version Control</h3><p class="feature-desc">Git history for all changes.</p></div>
+                    <div class="feature-card"><div class="feature-icon">&#9889;</div><h3 class="feature-title">Interactive</h3><p class="feature-desc">Animations, accordions, tabs - anything possible.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="requirements">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Requirements</span></h2>
+                <div class="glass-card">
+                    <h3>What You Need</h3>
+                    <ul>
+                        <li><strong>GitHub Account</strong> - Free at github.com</li>
+                        <li><strong>Claude Pro/Team</strong> - For Custom Skills and GitHub integration</li>
+                        <li><strong>5 Minutes</strong> - For one-time setup</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Recommended</h3>
+                    <ul>
+                        <li>Basic understanding of Git (helpful but not required)</li>
+                        <li>A topic for your first presentation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="github-setup">
+            <div class="section-inner">
+                <h2><span class="gradient-text">GitHub</span> Setup</h2>
+                <div class="glass-card">
+                    <h3><span class="step-number">1</span> Create Repository</h3>
+                    <p>Create a new repository on GitHub:</p>
+                    <ul>
+                        <li>Name: e.g. <code>presentations</code> or <code>slides</code></li>
+                        <li>Visibility: Public (for GitHub Pages)</li>
+                        <li>Add README: Optional</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3><span class="step-number">2</span> Enable GitHub Pages</h3>
+                    <p>In repository settings:</p>
+                    <ul>
+                        <li>Go to <strong>Settings</strong> &#8594; <strong>Pages</strong></li>
+                        <li>Source: <strong>Deploy from a branch</strong></li>
+                        <li>Branch: <strong>main</strong>, Folder: <strong>/ (root)</strong></li>
+                        <li>Save</li>
+                    </ul>
+                    <p>Your URL will be: <code>https://[username].github.io/[repo-name]/</code></p>
+                </div>
+                <div class="highlight-box">
+                    <h4>Tip</h4>
+                    <p>You can have multiple presentations in the same repository. Each presentation gets its own folder and is accessible at <code>/foldername/</code>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="claude-setup">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Claude</span> Skill Setup</h2>
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" onclick="switchTab(event, 'web')">Claude.ai Web</button>
+                        <button class="tab-btn" onclick="switchTab(event, 'cli')">Claude CLI</button>
+                    </div>
+                    <div id="web" class="tab-panel active">
+                        <div class="glass-card">
+                            <h3><span class="step-number">1</span> Connect GitHub</h3>
+                            <p>In Claude.ai:</p>
+                            <ul>
+                                <li>Open Settings (gear icon)</li>
+                                <li>Go to <strong>Connected Apps</strong></li>
+                                <li>Connect your GitHub account</li>
+                                <li>Select your repository</li>
+                            </ul>
+                        </div>
+                        <div class="glass-card">
+                            <h3><span class="step-number">2</span> Create Custom Skill</h3>
+                            <p>Create a new skill with the following content:</p>
+                        </div>
+                    </div>
+                    <div id="cli" class="tab-panel">
+                        <div class="glass-card">
+                            <h3><span class="step-number">1</span> Clone Repository</h3>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                                <pre><code>git clone https://github.com/[username]/presentations.git
+cd presentations</code></pre>
+                            </div>
+                        </div>
+                        <div class="glass-card">
+                            <h3><span class="step-number">2</span> Start Claude Code</h3>
+                            <div class="code-block">
+                                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                                <pre><code>claude</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3>Skill Instructions</h3>
+                    <p>Copy these instructions into your Custom Skill:</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">markdown</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code># Presentation Skill
+
+You create professional HTML presentations.
+
+## Design Principles
+- Dark Mode with Glassmorphism effects
+- Responsive for all screen sizes
+- Keyboard navigation (arrow keys)
+- Sidebar navigation with progress indicator
+
+## Technical Requirements
+- Single HTML file (inline CSS/JS)
+- No external dependencies
+- Vanilla JavaScript only
+- CSS Variables for easy customization
+
+## Structure
+- Each Section = 100vh (one "slide")
+- Glassmorphism Cards for content
+- Gradient text for headings
+- Feature grids for lists
+- Code blocks with copy function
+- Accordions for FAQs
+- Timeline for processes
+
+## Workflow
+1. User describes presentation
+2. You create complete HTML file
+3. Save as index.html (or [name].html)
+4. Commit and Push to GitHub</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow">
+            <div class="section-inner">
+                <h2>The <span class="gradient-text">Workflow</span></h2>
+                <div class="timeline">
+                    <div class="timeline-item"><h4 class="timeline-title">1. Write Your Prompt</h4><p>Describe your presentation clearly. More details = better results.</p></div>
+                    <div class="timeline-item"><h4 class="timeline-title">2. Claude Generates</h4><p>Claude creates a complete HTML file with CSS and JavaScript.</p></div>
+                    <div class="timeline-item"><h4 class="timeline-title">3. Review and Feedback</h4><p>Check the result. Request changes if needed.</p></div>
+                    <div class="timeline-item"><h4 class="timeline-title">4. Automatic Push</h4><p>Claude pushes the file to GitHub. GitHub Pages deploys automatically.</p></div>
+                    <div class="timeline-item"><h4 class="timeline-title">5. Share</h4><p>Share the link to your presentation!</p></div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Example Prompt</h4>
+                    <p>"Create a presentation about Machine Learning for beginners. 8 Slides: Introduction, What is ML, Types of ML, Supervised Learning, Unsupervised Learning, Use Cases, Getting Started, Resources."</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="first-presentation">
+            <div class="section-inner">
+                <h2>Your <span class="gradient-text">First Presentation</span></h2>
+                <div class="glass-card">
+                    <h3>Example Prompts to Get Started</h3>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Company Presentation<span class="accordion-icon">&#9660;</span></button>
+                            <div class="accordion-content"><div class="accordion-body"><p>"Create a presentation for our startup [Name]. Slides: Vision, Problem, Solution, Market, Business Model, Team, Traction, Ask."</p></div></div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Technical Tutorial<span class="accordion-icon">&#9660;</span></button>
+                            <div class="accordion-content"><div class="accordion-body"><p>"Create a tutorial about Docker for developers. Slides: What is Docker, Why Containers, Installation, First Steps, Dockerfile, Docker Compose, Best Practices, Next Steps."</p></div></div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Training Material<span class="accordion-icon">&#9660;</span></button>
+                            <div class="accordion-content"><div class="accordion-body"><p>"Create a training for new employees about IT Security. Slides: Why Important, Passwords, Phishing, Social Engineering, Safe Working, Reporting Incidents, Quiz, Summary."</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="best-practices">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Best Practices</span></h2>
+                <div class="feature-grid">
+                    <div class="glass-card">
+                        <h3>Good Prompts</h3>
+                        <ul>
+                            <li>Provide clear structure</li>
+                            <li>Name your target audience</li>
+                            <li>Specify desired tone</li>
+                            <li>Give examples if possible</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Iterate</h3>
+                        <ul>
+                            <li>Structure first, then details</li>
+                            <li>Give feedback</li>
+                            <li>Refine step by step</li>
+                            <li>Name specific changes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Pro Tip</h4>
+                    <p>Save good prompts as templates for future presentations!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="troubleshooting">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Troubleshooting</span></h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">GitHub Pages Shows 404<span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><ul><li>Check if GitHub Pages is enabled</li><li>Wait 1-2 minutes after push</li><li>Make sure file is named <code>index.html</code></li><li>Check branch settings</li></ul></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Styles Not Loading<span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><ul><li>CSS should be inline in <code>&lt;style&gt;</code> tag</li><li>Don't use external CSS files</li><li>Clear browser cache</li></ul></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Navigation Not Working<span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><ul><li>Check if section IDs are correct</li><li>Check JavaScript console for errors</li><li>Check scroll behavior</li></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced">
+            <div class="section-inner">
+                <h2><span class="gradient-text">Advanced</span> Techniques</h2>
+                <div class="glass-card">
+                    <h3>Custom Themes</h3>
+                    <p>Customize CSS variables for your own color schemes:</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">css</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>:root {
+    --accent-primary: #10b981;  /* Green */
+    --accent-secondary: #06b6d4; /* Cyan */
+    --bg-color: #0a0a0a;        /* Black */
+}</code></pre>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3>Multiple Presentations</h3>
+                    <p>Organize your repository:</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">text</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>presentations/
+  index.html          # Overview
+  ml-intro/
+    index.html        # ML Presentation
+  docker-tutorial/
+    index.html        # Docker Tutorial
+  company-pitch/
+    index.html        # Company Pitch</code></pre>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3>Presenter Mode</h3>
+                    <p>Add a presenter mode with notes and timer - ask Claude for it!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-inner">
+                <h2>Ready to <span class="gradient-text">Start</span>?</h2>
+                <p class="subtitle">Create your first HTML presentation with Claude now!</p>
+                <div class="glass-card">
+                    <h3>Next Steps</h3>
+                    <ol>
+                        <li>Create GitHub repository</li>
+                        <li>Enable GitHub Pages</li>
+                        <li>Set up Claude Skill</li>
+                        <li>Prompt your first presentation</li>
+                    </ol>
+                </div>
+                <div class="highlight-box">
+                    <h4>This Presentation</h4>
+                    <p>This presentation was created with exactly this workflow - it's proof that it works!</p>
+                </div>
+                <div class="btn-group">
+                    <a href="#intro" class="btn btn-primary">&#8593; Back to Top</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - sectionHeight / 3) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        menuToggle.addEventListener('click', () => { navSidebar.classList.toggle('open'); });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) { navSidebar.classList.remove('open'); }
+            });
+        });
+
+        function switchTab(event, tabId) {
+            const tabBtns = event.target.parentElement.querySelectorAll('.tab-btn');
+            const tabPanels = event.target.closest('.tabs').querySelectorAll('.tab-panel');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabPanels.forEach(panel => panel.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => { button.textContent = 'Copy'; button.classList.remove('copied'); }, 2000);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const sections = document.querySelectorAll('section');
+            const currentSection = [...sections].findIndex(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 100;
+            });
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentSection < sections.length - 1) { sections[currentSection + 1].scrollIntoView({ behavior: 'smooth' }); }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSection > 0) { sections[currentSection - 1].scrollIntoView({ behavior: 'smooth' }); }
+                else { sections[0].scrollIntoView({ behavior: 'smooth' }); }
+            }
+        });
+
+        window.addEventListener('scroll', () => { updateProgressBar(); updateActiveNav(); });
+
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+
+        updateProgressBar();
+        updateActiveNav();
+    </script>
+</body>
+</html>
