@@ -1,81 +1,87 @@
 # Morgenwert Presentations
 
-Interaktive HTML-Präsentationen mit Claude Code erstellen und auf GitHub Pages deployen.
+Create interactive HTML presentations with Claude Code and deploy to GitHub Pages.
 
-## Schnellstart
+## Quick Start
 
 ```
-/ppt Thema der Präsentation
+/ppt Topic of presentation
 ```
 
-Das war's. Claude erstellt eine komplette HTML-Präsentation im Morgenwert-Design.
+That's it. Claude creates a complete HTML presentation in Morgenwert design.
 
-## Beispiele
+## Examples
 
-| Eingabe | Ergebnis |
-|---------|----------|
-| `/ppt KI im Kundenservice` | Morgenwert-Design, fragt nach Inhalten |
-| `/ppt Schulung für neue Mitarbeiter` | Morgenwert-Design, fragt nach Slides |
-| `/ppt Präsentation für Kunde XY` | Fragt nach Kunden-CI (Farben, Stil) |
+| Input | Result |
+|-------|--------|
+| `/ppt AI in Customer Service` | Morgenwert design, asks for content |
+| `/ppt Training for New Employees` | Morgenwert design, asks for slides |
+| `/ppt Presentation for Client XY` | Asks for client CI (colors, style) |
 
-## Was automatisch verwendet wird (Morgenwert)
+## Default Settings (Morgenwert)
 
-- **Light Mode** - Weißer Hintergrund, professionell
-- **Farben**: Dunkelblau (#1e40af), Mittelblau (#3b82f6), Orange (#f97316)
+- **Light Mode** - White background, professional
+- **Colors**: Dark blue (#1e40af), Medium blue (#3b82f6), Orange (#f97316)
 - **Repository**: `Morgenwert/Presentations`
-- **Design**: Dezente Schatten, klare Typografie
+- **Design**: Subtle shadows, clean typography
 
-## Interaktive Elemente
+## Interactive Elements
 
-Bei Bedarf kannst du folgende Elemente anfordern:
+You can request the following elements:
 
-- **Tabs** - Inhalte gruppieren
-- **Accordions** - FAQ-Stil, aufklappbar
-- **Timeline** - Ablauf, Prozesse
-- **Statistik-Boxen** - Zahlen hervorheben
-- **Feature Cards** - Vorteile darstellen
-- **Highlight Boxes** - Tipps, wichtige Hinweise
-- **Code Blocks** - Mit Copy-Button
-- **ROI-Rechner** - Return on Investment berechnen
-- **Preiskalkulator** - Projektkosten kalkulieren
+- **Tabs** - Group content
+- **Accordions** - FAQ-style, expandable
+- **Timeline** - Processes, workflows
+- **Statistic Boxes** - Highlight numbers
+- **Feature Cards** - Display benefits
+- **Highlight Boxes** - Tips, important notes
+- **Code Blocks** - With copy button
+- **ROI Calculator** - Calculate return on investment
+- **Price Calculator** - Calculate project costs
 
-Alle Elemente siehst du live in der [Style Preview](presentations/style-preview/index.html).
+See all elements live in the [Style Preview](presentations/style-preview/index.html).
 
-## Kunden-Präsentationen
+## Client Presentations
 
-Wenn du sagst "für Kunde XY", fragt Claude nach:
-- Kundenfarben (Hex-Codes)
-- Design-Stil (Modern, Corporate, Kreativ)
-- Hell oder Dunkel
+When you say "for client XY", Claude asks for:
+- Client colors (hex codes)
+- Design style (Modern, Corporate, Creative)
+- Light or Dark mode
 
-## Ordnerstruktur
+## Folder Structure
 
 ```
 Presentations/
-├── CLAUDE.md               # Skill-Anweisungen
-├── index.html              # Vorlage/Template
-├── README.md               # Diese Datei
-└── presentations/          # Alle Präsentationen
-    ├── style-preview/      # Design-Vorschau
+├── CLAUDE.md               # Skill instructions
+├── index.html              # Template
+├── README.md               # This file
+└── presentations/          # All presentations
+    ├── style-preview/      # Design preview
     ├── claude-code-quickstart/
-    └── [neue-ppt]/         # Neue Präsentationen hier
+    └── [new-ppt]/          # New presentations here
 ```
 
 ## Live URLs
 
-Nach dem Push ist die Präsentation erreichbar unter:
+After push, presentations are available at:
 ```
-https://morgenwert.github.io/Presentations/presentations/[ordner-name]/
+https://morgenwert.github.io/Presentations/presentations/[folder-name]/
 ```
 
 ## Style Preview
 
-Die komplette Design-Vorschau mit allen Elementen und Rechnern:
+Complete design preview with all elements and calculators:
 
 | Version | Link |
 |---------|------|
-| Lokal | [presentations/style-preview/index.html](presentations/style-preview/index.html) |
+| Local | [presentations/style-preview/index.html](presentations/style-preview/index.html) |
 | Online | [morgenwert.github.io/Presentations/presentations/style-preview/](https://morgenwert.github.io/Presentations/presentations/style-preview/) |
 
-Enthält: Cards, Tabs, Accordions, Timeline, Statistiken, ROI-Rechner, Preiskalkulator
+Includes: Cards, Tabs, Accordions, Timeline, Statistics, ROI Calculator, Price Calculator
 
+## Templates
+
+| Language | Local | Online |
+|----------|-------|--------|
+| Deutsch | [index.html](index.html) | [morgenwert.github.io/Presentations/](https://morgenwert.github.io/Presentations/) |
+| English | [index-en.html](index-en.html) | [morgenwert.github.io/Presentations/index-en.html](https://morgenwert.github.io/Presentations/index-en.html) |
