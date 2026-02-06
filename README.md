@@ -79,3 +79,10 @@ Die komplette Design-Vorschau mit allen Elementen und Rechnern:
 
 Enthält: Cards, Tabs, Accordions, Timeline, Statistiken, ROI-Rechner, Preiskalkulator
 
+## Templates
+
+| Sprache | Lokal | Online |
+|---------|-------|--------|
+| Deutsch | [index.html](index.html) | [morgenwert.github.io/Presentations/](https://morgenwert.github.io/Presentations/) |
+| English | [index-en.html](index-en.html) | [morgenwert.github.io/Presentations/index-en.html](https://morgenwert.github.io/Presentations/index-en.html) |
+
