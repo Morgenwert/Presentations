@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewertung von KMU - Morgenwert Valuation & Advisory</title>
+    <style>
+        :root {
+            /* Morgenwert Farben - Blau + Graustufen */
+            --accent-primary: #1e40af;
+            --accent-secondary: #3b82f6;
+            --accent-light: #60a5fa;
+
+            /* Orange Akzent */
+            --accent-orange: #f97316;
+            --accent-orange-light: #fdba74;
+
+            /* Light Theme - Graustufen */
+            --bg-color: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+
+            /* Borders & Shadows */
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--bg-color);
+            border-right: 1px solid var(--border-color);
+            padding: 1.25rem 1rem;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.25rem;
+            display: block;
+            text-decoration: none;
+        }
+
+        .nav-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .nav-list { list-style: none; }
+        .nav-item { margin-bottom: 0.15rem; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(59, 130, 246, 0.1));
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .nav-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--bg-tertiary);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .nav-link.active .nav-number {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1002;
+            box-shadow: var(--shadow-lg);
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .section-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; color: var(--text-primary); }
+        h1 { font-size: clamp(2.25rem, 4.5vw, 3.25rem); margin-bottom: 1.25rem; }
+        h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 1.25rem; }
+        h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        h4 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .accent-text { color: var(--accent-primary); }
+        .subtitle { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.75rem; }
+        p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 1rem; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        .badge-blue { background: rgba(30, 64, 175, 0.1); color: var(--accent-primary); }
+        .badge-orange { background: var(--accent-orange); color: white; }
+
+        /* Hero Badge */
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+        .card:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-secondary); }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--accent-secondary); }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin: 0 auto 0.75rem;
+        }
+        .feature-icon.orange { background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light)); }
+
+        .feature-title { font-weight: 600; margin-bottom: 0.4rem; color: var(--text-primary); font-size: 0.95rem; }
+        .feature-desc { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
+
+        /* Stat Box */
+        .stat-box { text-align: center; padding: 1.25rem; }
+        .stat-number { font-size: 2.25rem; font-weight: 700; color: var(--accent-orange); line-height: 1; margin-bottom: 0.4rem; }
+        .stat-number.blue { color: var(--accent-primary); }
+        .stat-label { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.08), rgba(59, 130, 246, 0.08));
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 0 8px 8px 0;
+            padding: 1.1rem 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .highlight-box h4 { color: var(--accent-primary); margin-bottom: 0.4rem; }
+        .highlight-box p { margin: 0; font-size: 0.95rem; }
+
+        .highlight-box.tip {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(253, 186, 116, 0.08));
+            border-left-color: var(--accent-orange);
+        }
+        .highlight-box.tip h4 { color: var(--accent-orange); }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(252, 165, 165, 0.08));
+            border-left-color: #ef4444;
+        }
+        .highlight-box.warning h4 { color: #ef4444; }
+
+        /* Tabs */
+        .tabs { margin: 1.5rem 0; }
+        .tab-list {
+            display: flex;
+            gap: 0.25rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.6rem 1rem;
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--accent-primary); }
+        .tab-btn.active { color: var(--accent-primary); font-weight: 600; }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Accordion */
+        .accordion { margin: 1.25rem 0; }
+        .accordion-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.4rem;
+            overflow: hidden;
+        }
+        .accordion-header {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+        .accordion-header:hover { background: var(--bg-tertiary); }
+        .accordion-icon { transition: transform 0.3s ease; color: var(--accent-primary); font-size: 0.75rem; }
+        .accordion-item.open .accordion-icon { transform: rotate(180deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-item.open .accordion-content { max-height: 800px; }
+        .accordion-body { padding: 0 1.1rem 1.1rem; color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+        }
+        .timeline-item { position: relative; padding-bottom: 1.5rem; }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.4rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            transform: translateX(-50%);
+            border: 3px solid var(--bg-color);
+        }
+        .timeline-title { color: var(--text-primary); margin-bottom: 0.3rem; font-size: 1rem; }
+        .timeline-desc { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; margin: 1.25rem 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem;
+        }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        td { color: var(--text-secondary); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--bg-secondary); }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .comparison-card.highlight {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+        .comparison-card.warning {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn-primary { background: var(--accent-primary); color: white; }
+        .btn-primary:hover { background: var(--accent-secondary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-color); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+        .btn-group { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+
+        /* Lists */
+        ul, ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+        li { color: var(--text-secondary); margin-bottom: 0.35rem; font-size: 0.95rem; }
+        li::marker { color: var(--accent-primary); }
+
+        /* Range Bar (Grenzpreis) */
+        .range-bar {
+            display: flex;
+            height: 56px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+        }
+        .range-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            padding: 0 1rem;
+        }
+        .range-segment.seller { background: var(--accent-primary); flex: 1; }
+        .range-segment.zone { background: var(--accent-orange); flex: 1.2; }
+        .range-segment.buyer { background: var(--accent-secondary); flex: 1; }
+
+        /* Formula Block */
+        .formula-block {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        .formula-var { font-weight: 700; color: var(--accent-primary); }
+        .formula-op { color: var(--text-muted); margin: 0 0.3rem; }
+        .formula-result { font-weight: 700; color: var(--accent-orange); font-size: 1.1rem; }
+
+        /* Calculator */
+        .calculator { max-width: 100%; }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .input-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .input-group label { font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); }
+        .input-group input, .input-group select {
+            padding: 0.6rem 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            background: var(--bg-color);
+            transition: border-color 0.2s ease;
+        }
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+        .calc-results {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 1.25rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+        .result-item { text-align: center; }
+        .result-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+        .result-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-orange); }
+        .result-value.primary { color: var(--accent-primary); }
+
+        /* Scoring Table */
+        .scoring-row {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .scoring-row:last-child { border-bottom: none; }
+        .scoring-category { flex: 1; color: var(--text-primary); font-weight: 500; }
+        .scoring-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .scoring-badge.personal { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); }
+        .scoring-badge.business { background: rgba(30, 64, 175, 0.1); color: var(--accent-primary); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-sidebar { transform: translateX(-100%); }
+            .nav-sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .menu-toggle { display: flex; }
+            section { padding: 3rem 1.5rem; }
+        }
+
+        @media (max-width: 640px) {
+            section { padding: 2rem 1rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .tab-list { gap: 0; }
+            .tab-btn { padding: 0.5rem 0.65rem; font-size: 0.8rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-logo">Morgenwert</div>
+        <div class="nav-subtitle">Bewertung von KMU</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#slide-1" class="nav-link active"><span class="nav-number">1</span> Einleitung</a></li>
+            <li class="nav-item"><a href="#slide-2" class="nav-link"><span class="nav-number">2</span> Marktkontext</a></li>
+            <li class="nav-item"><a href="#slide-3" class="nav-link"><span class="nav-number">3</span> Bewertungsanl&auml;sse</a></li>
+            <li class="nav-item"><a href="#slide-4" class="nav-link"><span class="nav-number">4</span> Verfahren</a></li>
+            <li class="nav-item"><a href="#slide-5" class="nav-link"><span class="nav-number">5</span> Ertragswert &amp; DCF</a></li>
+            <li class="nav-item"><a href="#slide-6" class="nav-link"><span class="nav-number">6</span> Wert vs. Preis</a></li>
+            <li class="nav-item"><a href="#slide-7" class="nav-link"><span class="nav-number">7</span> KMU-Besonderheiten</a></li>
+            <li class="nav-item"><a href="#slide-8" class="nav-link"><span class="nav-number">8</span> &Uuml;bertragbarkeit</a></li>
+            <li class="nav-item"><a href="#slide-9" class="nav-link"><span class="nav-number">9</span> Abschmelz-Methode</a></li>
+            <li class="nav-item"><a href="#slide-10" class="nav-link"><span class="nav-number">10</span> Abschmelz-Parameter</a></li>
+            <li class="nav-item"><a href="#slide-11" class="nav-link"><span class="nav-number">11</span> Praxisbeispiel</a></li>
+            <li class="nav-item"><a href="#slide-12" class="nav-link"><span class="nav-number">12</span> Bewertungsprozess</a></li>
+            <li class="nav-item"><a href="#slide-13" class="nav-link"><span class="nav-number">13</span> Wertsteigerung</a></li>
+            <li class="nav-item"><a href="#slide-14" class="nav-link"><span class="nav-number">14</span> Zusammenfassung</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- ===== SLIDE 1: Einleitung ===== -->
+        <section id="slide-1">
+            <div class="section-inner">
+                <span class="hero-badge">White Paper | Morgenwert</span>
+                <h1>Bewertung von <span class="accent-text">KMU</span></h1>
+                <p class="subtitle">Grundlagen, Verfahren und Besonderheiten der Bewertung kleiner und mittlerer Unternehmen</p>
+                <p>Die Bewertung von KMU wird in der Praxis oft unterschätzt. Personenbezug und weitere individuelle Faktoren schlagen bei KMU stärker durch als bei größeren Unternehmen. Deshalb muss der Einzelfall genau betrachtet werden.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128218;</div>
+                        <div class="feature-title">Grundlagen</div>
+                        <p class="feature-desc">Bewertungsanlässe, Verfahren und Werttreiber</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#9878;</div>
+                        <div class="feature-title">KMU-Spezifika</div>
+                        <p class="feature-desc">Übertragbarkeit, Size Discount und Abschmelzung</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128200;</div>
+                        <div class="feature-title">Praxisbeispiel</div>
+                        <p class="feature-desc">Durchgerechnete Bewertung mit interaktivem Rechner</p>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <a href="#slide-2" class="btn btn-primary">Zur Präsentation &rarr;</a>
+                    <a href="#slide-14" class="btn btn-secondary">Kontakt</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 2: Marktkontext (NEU - Cowork #1) ===== -->
+        <section id="slide-2">
+            <div class="section-inner">
+                <span class="badge badge-orange">Marktkontext</span>
+                <h2>Warum <span class="accent-text">KMU-Bewertung</span> relevant ist</h2>
+                <p>Kleine und mittlere Unternehmen bilden das Rückgrat der deutschen Wirtschaft. Die Frage nach dem Unternehmenswert stellt sich in vielen Situationen: bei einem geplanten Verkauf, einer Nachfolgeregelung, steuerlichen Auseinandersetzungen oder familienrechtlichen Fragestellungen.</p>
+
+                <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="feature-card stat-box">
+                        <div class="stat-number blue">3,5 Mio.</div>
+                        <div class="stat-label">Unternehmen in Deutschland</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">99,5%</div>
+                        <div class="stat-label">davon sind KMU</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number blue">~190.000</div>
+                        <div class="stat-label">Nachfolgen pro Jahr</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Die verbreitete Annahme</h4>
+                    <p>&bdquo;Kleines Unternehmen = kleine Komplexität&ldquo; &ndash; diese Annahme ist weit verbreitet, aber falsch. KMU-Bewertungen sind oft nicht weniger anspruchsvoll als die Bewertung größerer Unternehmen. Aber anders.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                        <div class="feature-title">Personenbezug</div>
+                        <p class="feature-desc">Eigentümer als Leistungserbringer, Vertriebler und Know-How-Träger</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128176;</div>
+                        <div class="feature-title">Nachfolgeproblematik</div>
+                        <p class="feature-desc">Viele Unternehmer finden keinen Nachfolger &ndash; der Wert muss fair ermittelt werden</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9878;</div>
+                        <div class="feature-title">Vielfältige Anlässe</div>
+                        <p class="feature-desc">Von der Erbschaftsteuer bis zum Gesellschafterstreit</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 3: Bewertungsanlässe ===== -->
+        <section id="slide-3">
+            <div class="section-inner">
+                <span class="badge badge-blue">Grundlagen</span>
+                <h2>Bewertungsanlässe und <span class="accent-text">Funktion des Gutachters</span></h2>
+                <p>In Theorie, Praxis und Rechtsprechung besteht Einigkeit, dass es weder einen &bdquo;objektiven, allgemeingültigen&ldquo; noch den &bdquo;schlechthin richtigen&ldquo; Unternehmenswert gibt (IDW S1, Tz. 13). Der Wert hängt vom Bewertungszweck und der Funktion des Gutachters ab.</p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>Bewertungsanlass</th><th>Beispiele</th><th>Funktion</th><th>Wertart</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Gesellschaftsrecht</strong></td><td>Abfindung, Squeeze-Out, Verschmelzung</td><td>Neutraler Gutachter</td><td>Objektivierter Wert</td></tr>
+                            <tr><td><strong>Familien- u. Erbrecht</strong></td><td>Zugewinnausgleich, Erbauseinandersetzung</td><td>Neutraler Gutachter / Schiedsgutachter</td><td>Objektivierter / Subjektiver Wert</td></tr>
+                            <tr><td><strong>Steuerrecht</strong></td><td>Schenkung- u. Erbschaftsteuer</td><td>Neutraler Gutachter</td><td>Objektivierter Wert</td></tr>
+                            <tr><td><strong>Kauf / Verkauf</strong></td><td>Transaktion, Due Diligence</td><td>Berater</td><td>Subjektiver Wert</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Typisierungen des IDW S1: Objektivierter vs. Subjektiver Wert
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Der IDW S1 unterscheidet klar zwischen objektivierten und subjektiven Werten:</p>
+                                <ul>
+                                    <li><strong>Objektivierter Wert:</strong> Stand-Alone-Bewertung, typisierte Annahmen, Fremdgeschäftsführer-Fiktion, nur bereits eingeleitete Maßnahmen</li>
+                                    <li><strong>Subjektiver Wert:</strong> Berücksichtigung individueller Planungen, echter Synergien, tatsächlicher Eigentümerstruktur</li>
+                                </ul>
+                                <p>Durch bestimmte Vorgaben wird bei objektivierten Werten die Bandbreite subjektiver Einschätzungen eingeschränkt, um Fairness und Vergleichbarkeit zu gewährleisten.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box tip">
+                    <h4>Praxistipp</h4>
+                    <p>Für dasselbe Unternehmen können zum gleichen Zeitpunkt je nach Bewertungsanlass unterschiedliche Unternehmenswerte resultieren. Frühzeitig einen erfahrenen Bewertungsexperten hinzuziehen!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 4: Bewertungsverfahren ===== -->
+        <section id="slide-4">
+            <div class="section-inner">
+                <span class="badge badge-blue">Verfahren</span>
+                <h2>Bewertungsverfahren <span class="accent-text">im Überblick</span></h2>
+                <p>Die Verfahren der Unternehmensbewertung lassen sich in drei Hauptkategorien einteilen. Allgemein anerkannt ist, Unternehmen anhand der realistischerweise zu erzielenden finanziellen Überschüsse zu bewerten (IDW S1, Tz. 4-7).</p>
+
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" data-tab="tab-zukunft">Zukunftserfolgsverfahren</button>
+                        <button class="tab-btn" data-tab="tab-multi">Multiplikatorverfahren</button>
+                        <button class="tab-btn" data-tab="tab-substanz">Substanzwertverfahren</button>
+                    </div>
+
+                    <div class="tab-panel active" id="tab-zukunft">
+                        <p>Ertragswert- und DCF-Verfahren ermitteln den Unternehmenswert als Barwert der zukünftigen finanziellen Überschüsse.</p>
+                        <div class="comparison-grid">
+                            <div class="comparison-card highlight">
+                                <h4>Bruttoverfahren (Entity)</h4>
+                                <ul>
+                                    <li>WACC-Verfahren</li>
+                                    <li>APV-Verfahren</li>
+                                    <li>TCF-Verfahren</li>
+                                </ul>
+                                <p style="font-size:0.85rem; margin-top:0.5rem;">Gesamtkapitalwert minus Fremdkapital = Eigenkapitalwert</p>
+                            </div>
+                            <div class="comparison-card">
+                                <h4>Nettoverfahren (Equity)</h4>
+                                <ul>
+                                    <li>Ertragswertverfahren</li>
+                                    <li>Flow-to-Equity (FTE)</li>
+                                </ul>
+                                <p style="font-size:0.85rem; margin-top:0.5rem;">Eigenkapitalwert direkt aus Überschüssen der Eigentümer</p>
+                            </div>
+                        </div>
+                        <div class="highlight-box">
+                            <h4>IDW S1, Tz. 101</h4>
+                            <p>Das Ertragswertverfahren und die DCF-Verfahren beruhen auf der gleichen konzeptionellen Grundlage und führen bei identischen Annahmen zum gleichen Ergebnis.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-multi">
+                        <p>Marktpreisorientierte Verfahren skalieren eine Bezugsgröße (z. B. EBIT, Umsatz) anhand am Markt beobachtbarer Vergleichswerte.</p>
+                        <div class="comparison-grid">
+                            <div class="comparison-card">
+                                <h4>Börsenmultiplikatoren</h4>
+                                <p style="font-size:0.9rem;">Vergleich mit börsennotierten Unternehmen. Grundsätzlich Bewertung von Minderheitsanteilen.</p>
+                            </div>
+                            <div class="comparison-card">
+                                <h4>Transaktionsmultiplikatoren</h4>
+                                <p style="font-size:0.9rem;">Rückschlüsse aus gezahlten Preisen. Achtung: Synergien und Kontrollzuschläge möglich.</p>
+                            </div>
+                        </div>
+                        <div class="highlight-box tip">
+                            <h4>Praxistipp</h4>
+                            <p>EBIT- und EBITDA-Multiplikatoren sind gängig, aber selten allein ausreichend. Eine fundierte DCF-Analyse erhöht die Verhandlungssicherheit und signalisiert Ernsthaftigkeit.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-substanz">
+                        <p>Dem Substanzwert wird nach IDW S1 (Tz. 6, 170-172) keine eigenständige Bedeutung mehr zugeschrieben.</p>
+                        <div class="comparison-grid">
+                            <div class="comparison-card">
+                                <h4>Liquidationswert</h4>
+                                <p style="font-size:0.9rem;">Erwartete Erlöse bei Veräußerung einzelner Aktiva. Bildet die Untergrenze des Unternehmenswertes.</p>
+                            </div>
+                            <div class="comparison-card">
+                                <h4>Wiederbeschaffungswert</h4>
+                                <p style="font-size:0.9rem;">Was müsste aufgewendet werden, um das Unternehmen auf der &bdquo;grünen Wiese&ldquo; wieder zu errichten?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 5: Ertragswert & DCF ===== -->
+        <section id="slide-5">
+            <div class="section-inner">
+                <span class="badge badge-blue">Ertragswert &amp; DCF</span>
+                <h2>Bewertungsformel und <span class="accent-text">Kapitalisierungszins</span></h2>
+                <p>Der Unternehmenswert wird durch die erwirtschafteten Überschüsse und die Verzinsung des eingesetzten Kapitals (Kapitalkosten) determiniert. Die Bewertung erfolgt in zwei Phasen: Detailplanung (3-5 Jahre) und ewige Rente.</p>
+
+                <h3>Freier Cashflow (FCFF)</h3>
+                <div class="formula-block">
+                    <span class="formula-var">EBIT</span>
+                    <span class="formula-op">&minus;</span> Steuern auf EBIT
+                    <span class="formula-op">=</span> <span class="formula-var">NOPAT</span>
+                    <span class="formula-op">+</span> Abschreibungen
+                    <span class="formula-op">&minus;</span> Nettoinvestitionen
+                    <span class="formula-op">=</span> <span class="formula-result">FCFF</span>
+                </div>
+
+                <h3>CAPM / WACC</h3>
+                <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128178;</div>
+                        <div class="feature-title">Eigenkapitalkosten</div>
+                        <p class="feature-desc">Risikoloser Zins + Marktrisikoprämie &times; Beta</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#127974;</div>
+                        <div class="feature-title">Fremdkapitalkosten</div>
+                        <p class="feature-desc">(Risikoloser Zins + Kredit-Spread) &times; (1 &minus; Steuersatz)</p>
+                    </div>
+                </div>
+
+                <div class="formula-block">
+                    <span class="formula-result">WACC</span>
+                    <span class="formula-op">=</span>
+                    <span class="formula-var">EK-Kosten</span> &times; EK/GK
+                    <span class="formula-op">+</span>
+                    <span class="formula-var">FK-Kosten n.St.</span> &times; FK/GK
+                </div>
+
+                <!-- Cowork #4: KMU-Risikoaufschlag explizit -->
+                <div class="highlight-box tip">
+                    <h4>KMU-spezifische Risikoaufschläge</h4>
+                    <p>Bei KMU kommen zusätzliche Risikoprämien zum Standard-CAPM hinzu:</p>
+                </div>
+                <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128207;</div>
+                        <div class="feature-title">Size Premium</div>
+                        <p class="feature-desc">Größenabschlag: kleinere Unternehmen tragen höheres Risiko</p>
+                        <p style="font-size:0.75rem; color:var(--accent-orange); font-weight:600; margin:0.5rem 0 0;">Nur bei subjektiven Bewertungen</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128274;</div>
+                        <div class="feature-title">Illiquiditätsprämie</div>
+                        <p class="feature-desc">Kein Kapitalmarktzugang, eingeschränkte Handelbarkeit</p>
+                        <p style="font-size:0.75rem; color:var(--accent-primary); font-weight:600; margin:0.5rem 0 0;">Ggf. zulässig gem. IDW S1</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128101;</div>
+                        <div class="feature-title">Fungibilitätsabschlag</div>
+                        <p class="feature-desc">Fehlende Diversifizierung der Anteilseigner</p>
+                        <p style="font-size:0.75rem; color:var(--accent-primary); font-weight:600; margin:0.5rem 0 0;">Ggf. zulässig gem. IDW S1</p>
+                    </div>
+                </div>
+
+                <div class="formula-block">
+                    <span class="formula-result">W(EK)</span>
+                    <span class="formula-op">=</span>
+                    &Sigma; FCFF / (1 + WACC)<sup>t</sup>
+                    <span class="formula-op">&minus;</span>
+                    verzinsl. FK
+                    <span class="formula-op">+</span>
+                    nicht-betriebsnotw. Vermögen
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 6: Wert vs. Preis & Werttreiber ===== -->
+        <section id="slide-6">
+            <div class="section-inner">
+                <span class="badge badge-blue">Konzepte</span>
+                <h2>Wert ist nicht gleich <span class="accent-text">Preis</span></h2>
+                <p>Eine zentrale Erkenntnis der Bewertungstheorie: Der Unternehmenswert ist nicht identisch mit dem Kaufpreis. Berechnete Werte sind subjektive Entscheidungswerte (Grenzpreise). Gezahlte Kaufpreise sind Ergebnisse von Verhandlungen.</p>
+
+                <h3>Das Grenzpreis-Konzept</h3>
+                <div class="range-bar">
+                    <div class="range-segment seller">Grenzpreis<br>Verkäufer</div>
+                    <div class="range-segment zone">&#8592; Einigungsbereich &#8594;</div>
+                    <div class="range-segment buyer">Grenzpreis<br>Käufer</div>
+                </div>
+                <p style="font-size:0.9rem; text-align:center; color:var(--text-muted);">Weder Käufer noch Verkäufer nennen ihren Grenzpreis. Beide versuchen, die Gegenseite zu beeinflussen.</p>
+
+                <div class="highlight-box tip">
+                    <h4>Praxistipp</h4>
+                    <p>Der gezahlte Preis kann von den berechneten Werten abweichen &ndash; etwa durch Machtgefälle im Verhandlungsprozess oder persönliche Umstände der Inhaber.</p>
+                </div>
+
+                <h3>Die drei Werttreiber <span class="badge badge-orange">Bewertungs-Triangel</span></h3>
+                <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128176;</div>
+                        <div class="feature-title">Höhe der Cashflows</div>
+                        <p class="feature-desc">Wie hoch sind die erwarteten nachhaltigen Zahlungsmittelüberschüsse?</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9202;</div>
+                        <div class="feature-title">Zeitschiene</div>
+                        <p class="feature-desc">Wie lange und wie nachhaltig fließen die Überschüsse?</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#9888;</div>
+                        <div class="feature-title">Risiko</div>
+                        <p class="feature-desc">Wie unsicher sind die erwarteten Überschüsse?</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Zukunft schlägt Vergangenheit</h4>
+                    <p>Auch wer lediglich Vergangenheitswerte heranzieht, macht implizit eine Zukunftsannahme: Er unterstellt, dass die Zukunft so verläuft wie der Vergangenheitsausschnitt. Die Vergangenheit dient als Ausgangspunkt, nicht als Ersatz für Zukunftsprognosen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 7: KMU-Besonderheiten ===== -->
+        <section id="slide-7">
+            <div class="section-inner">
+                <span class="badge badge-orange">KMU-Spezifika</span>
+                <h2>Besonderheiten bei der <span class="accent-text">Bewertung von KMU</span></h2>
+                <p>KMU unterscheiden sich von großen Unternehmen in einer Reihe von Faktoren, die direkte Auswirkungen auf die Bewertung haben. Im Allgemeinen geht man von KMU-Abschlägen von ca. 30-50% aus.</p>
+
+                <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">30-50%</div>
+                        <div class="stat-label">Typischer KMU-Abschlag (Size Discount)</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number blue">&lt; 20 Mio.</div>
+                        <div class="stat-label">Umsatzgrenze für zusätzliche Abschläge</div>
+                    </div>
+                    <div class="feature-card stat-box">
+                        <div class="stat-number">IDW PH 1/2014</div>
+                        <div class="stat-label" style="font-size:0.8rem;">Praxishinweis für KMU-Bewertung</div>
+                    </div>
+                </div>
+
+                <h3>Die vier Risikokategorien <span style="font-weight:400; font-size:0.85rem; color:var(--text-muted);">(gem. IDW PH 1/2014)</span></h3>
+                <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="feature-card">
+                        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                        <div class="feature-title">Eigentümerstruktur</div>
+                        <p class="feature-desc">
+                            &bull; Eigentümer als Geschäftsführer<br>
+                            &bull; Abhängigkeit vom Inhaber<br>
+                            &bull; Private/betriebliche Überschneidung
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#127970;</div>
+                        <div class="feature-title">Geschäftsmodell</div>
+                        <p class="feature-desc">
+                            &bull; Wenige Kunden/Produkte<br>
+                            &bull; Geringe Diversifikation<br>
+                            &bull; Konzentrationsrisiken
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127974;</div>
+                        <div class="feature-title">Finanzierung</div>
+                        <p class="feature-desc">
+                            &bull; Kein Kapitalmarktzugang<br>
+                            &bull; Eingeschränkte Finanzierung<br>
+                            &bull; Illiquidität des Investments
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128202;</div>
+                        <div class="feature-title">Organisation &amp; Rechnungswesen</div>
+                        <p class="feature-desc">
+                            &bull; Fehlende Unternehmensplanung<br>
+                            &bull; Eingeschränkte Rechnungslegung<br>
+                            &bull; Schwächere Daten-/Controllingqualität
+                        </p>
+                    </div>
+                </div>
+
+                <div class="highlight-box tip">
+                    <h4>Kernaussage</h4>
+                    <p>Ihr Unternehmen macht das Gleiche wie der Großkonzern &ndash; aber ist dennoch weniger wert. Der Grund liegt nicht in der Leistung, sondern in den strukturellen Risiken und der eingeschränkten Übertragbarkeit.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 8: Übertragbare Ertragskraft ===== -->
+        <section id="slide-8">
+            <div class="section-inner">
+                <span class="badge badge-orange">Kernkonzept</span>
+                <h2>Übertragbare <span class="accent-text">Ertragskraft</span></h2>
+                <p>Bei personenbezogenen Unternehmen ist der Einfluss der Eigentümer auf die Ertragskraft zu analysieren und ggf. anlassbezogen zu eliminieren (IDW S1, Tz. 38-42).</p>
+
+                <div class="highlight-box">
+                    <h4>Inhabergeführt ist nicht gleich inhaberabhängig!</h4>
+                    <p>Ein Arzt führt persönliche Dienstleistungen durch &ndash; Kunden kommen wegen der Person. Bei einem Self-Storage-Unternehmen hängt die Kundenbeziehung von Lage, Erreichbarkeit und Sicherheit ab &ndash; nicht vom Inhaber.</p>
+                </div>
+
+                <h3>Betrieblicher vs. Persönlicher Goodwill</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-card highlight">
+                        <h4 style="color:var(--accent-primary);">&#127974; Betrieblicher Goodwill</h4>
+                        <p style="font-size:0.85rem; font-weight:600; color:var(--accent-primary);">= Übertragbar</p>
+                        <ul>
+                            <li>Firmenname und Marke</li>
+                            <li>Marketing und Branding</li>
+                            <li>Kundennähe / -bindung</li>
+                            <li>Wiederkehrende Erlöse</li>
+                            <li>Organisationsgrad</li>
+                            <li>Geschützte Rechte / Patente</li>
+                            <li>Bindung des Personals</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card warning">
+                        <h4 style="color:var(--accent-orange);">&#128100; Persönlicher Goodwill</h4>
+                        <p style="font-size:0.85rem; font-weight:600; color:var(--accent-orange);">= Nicht übertragbar</p>
+                        <ul>
+                            <li>Besondere Kundenbeziehungen</li>
+                            <li>Persönliche / familiäre Beziehungen</li>
+                            <li>Spezialistenwissen des Eigentümers</li>
+                            <li>Kreativität und technisches Know-How</li>
+                            <li>Loyalität der Mitarbeiter zum Inhaber</li>
+                            <li>Reputation der Person</li>
+                            <li>Alter, Gesundheit, Arbeitsethos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Formen der Übertragbarkeit</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Art</th><th>Verlauf</th><th>Beispiel</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Dauerhaft</strong></td><td>Ertragskraft bleibt voll erhalten</td><td>Tankstelle, Apotheke (standortabhängig)</td></tr>
+                            <tr><td><strong>Partiell</strong></td><td>Ertragskraft geht teilweise verloren</td><td>Kundenstamm schmilzt langsam ab</td></tr>
+                            <tr><td><strong>Temporär</strong></td><td>Zunächst gesichert, dann abfallend</td><td>Feste Vertragslaufzeiten, Patentschutz</td></tr>
+                            <tr><td><strong>Temporär verzögert</strong></td><td>Bleibt vorübergehend, fällt dann ab</td><td>GF bleibt für gewisse Zeit im Unternehmen</td></tr>
+                            <tr><td><strong>Gar nicht</strong></td><td>Ertragskraft nicht übertragbar</td><td>Rein persönliche Dienstleistungen</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 9: Abschmelz-Methode ===== -->
+        <section id="slide-9">
+            <div class="section-inner">
+                <span class="badge badge-orange">Methodik</span>
+                <h2>Die <span class="accent-text">Abschmelz-Methode</span></h2>
+                <p>Wenn die Ertragskraft nicht voll übertragbar ist, muss dies im Bewertungsmodell berücksichtigt werden. Die Abschmelz-Methode ist das zentrale Instrument hierfür.</p>
+
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" data-tab="tab-abschmelz-ueberblick">Überblick</button>
+                        <button class="tab-btn" data-tab="tab-abschmelz-a">Methode (a)</button>
+                        <button class="tab-btn" data-tab="tab-abschmelz-b">Methode (b)</button>
+                        <button class="tab-btn" data-tab="tab-abschmelz-vereinfacht">Vereinfacht. EWV</button>
+                    </div>
+
+                    <div class="tab-panel active" id="tab-abschmelz-ueberblick">
+                        <h3>KMU-spezifische Anpassungen im Bewertungsmodell</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead><tr><th>Parameter</th><th>KMU-spezifische Anpassung</th></tr></thead>
+                                <tbody>
+                                    <tr><td><strong>Vergangenheitsbereinigung</strong></td><td>Unternehmerlohn, Familienangehörige, Gesellschafterdarlehen, Sphärentrennung</td></tr>
+                                    <tr><td><strong>Planung / Cashflows</strong></td><td>Übertragbarkeit der Ertragshöhe, Abschmelzung personenbezogener Faktoren</td></tr>
+                                    <tr><td><strong>Wachstum / Zeitraum</strong></td><td>Begrenzung des Ergebniszeitraums, Abschmelzen immaterieller Faktoren</td></tr>
+                                    <tr><td><strong>Kapitalisierungszins</strong></td><td>Illiquidität, fehlende Diversifizierung, Size Premium</td></tr>
+                                    <tr><td><strong>Untergrenze</strong></td><td>Liquidationswert, wenn Fortführung ohne Inhaber nicht möglich</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-abschmelz-a">
+                        <h3>(a) Abschmelzung des Kundenstamms</h3>
+                        <p>Bei einem oder wenigen isolierbaren immateriellen Faktoren (z. B. dem Kundenstamm) können Abwanderungsraten ggf. aus historischen Daten abgeleitet werden.</p>
+                        <div class="card">
+                            <h4>Vorgehen:</h4>
+                            <ol>
+                                <li>Identifikation des isolierbaren Faktors (z. B. Kundenstamm)</li>
+                                <li>Schätzung der Abwanderungsrate aus historischen Daten</li>
+                                <li>Bestimmung der Nutzungsdauer</li>
+                                <li>Abschmelzung der darauf entfallenden Umsatzerlöse</li>
+                            </ol>
+                        </div>
+                        <div class="highlight-box">
+                            <h4>Beispiel</h4>
+                            <p>Kundenstamm eines Dienstleisters: Jährliche Abwanderungsrate von 15% aus historischer Analyse. Bei Inhaberwechsel wird ohne Gegenmaßnahmen die höhere Rate angesetzt. Die auf den Kundenstamm entfallenden Erlöse werden entsprechend über die geschätzte Nutzungsdauer abgeschmolzen.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-abschmelz-b">
+                        <h3>(b) Abschmelzung der Überrenditen</h3>
+                        <p>Wenn der relevante Faktor nicht isoliert betrachtet werden kann, wird das eingesetzte Kapital mit dem Diskontierungszinssatz verzinst. Darüber hinausgehende Renditen werden als Überrenditen angesehen und abgeschmolzen.</p>
+                        <div class="card">
+                            <h4>Vorgehen:</h4>
+                            <ol>
+                                <li>Ermittlung der Kapitalverzinsung zum WACC (Benchmark)</li>
+                                <li>Identifikation der Überrenditen (Rendite &gt; Benchmark)</li>
+                                <li>Bestimmung des nicht übertragbaren Anteils (Scoring-Methode)</li>
+                                <li>Abschmelzung gemäß angenommenem Verlauf</li>
+                            </ol>
+                        </div>
+                        <div class="highlight-box tip">
+                            <h4>Alternative</h4>
+                            <p>Vereinfachend werden in der Praxis teilweise auch operative Margen auf ein marktübliches Niveau abgeschmolzen.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-abschmelz-vereinfacht">
+                        <h3>Kritik am vereinfachten Ertragswertverfahren</h3>
+                        <p>Das steuerlich relevante vereinfachte Ertragswertverfahren nach &sect; 199 BewG verdeutlicht die Problematik einer reinen Vergangenheitsbetrachtung: Durchschnitt der letzten 3 Jahre &times; 13,75.</p>
+                        <div class="highlight-box warning">
+                            <h4>Warum problematisch?</h4>
+                            <p>&bull; Nur steuerrechtlich relevant, aber wird in der Praxis häufig auch anderweitig herangezogen<br>
+                            &bull; Implizite Unterstellung: Zukunft = Vergangenheit<br>
+                            &bull; Unterstellt 100% Übertragbarkeit der Erträge<br>
+                            &bull; Hoher Multiplikator &rarr; Bewertung meist überhöht<br>
+                            &bull; Selbst eine Öffnungsklausel: &bdquo;nur anwendbar, solange nicht offensichtlich falsch&ldquo;</p>
+                        </div>
+                        <div class="highlight-box tip">
+                            <h4>Achtung</h4>
+                            <p>Die ersparten Bewertungskosten durch das einfache Verfahren werden oft in Form einer überhöhten Steuerlast deutlich überkompensiert.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 10: Abschmelz-Parameter ===== -->
+        <section id="slide-10">
+            <div class="section-inner">
+                <span class="badge badge-orange">Parameter</span>
+                <h2>Schätzung der <span class="accent-text">Abschmelz-Parameter</span></h2>
+                <p>Zwei zentrale Fragen der Abschmelz-Methode: Wie hoch ist der nicht übertragbare Anteil? Und wie lange dauert die Abschmelzung?</p>
+
+                <div class="tabs">
+                    <div class="tab-list">
+                        <button class="tab-btn active" data-tab="tab-hoehe">Abschmelz-Höhe (MuM-Methode)</button>
+                        <button class="tab-btn" data-tab="tab-dauer">Abschmelz-Dauer (IDW-Katalog)</button>
+                    </div>
+
+                    <div class="tab-panel active" id="tab-hoehe">
+                        <h3>Scoring-Methode (MuM-Methode)</h3>
+                        <p>Zehn Kategorien werden gleichgewichtet (je 10%) bewertet und dem persönlichen oder betrieblichen Goodwill zugeordnet:</p>
+                        <div class="card" style="padding:0.5rem 0;">
+                            <div class="scoring-row" style="background:var(--bg-tertiary); font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                <span class="scoring-category">Kategorie</span>
+                                <span class="scoring-badge" style="background:transparent; color:var(--text-muted);">Zuordnung</span>
+                            </div>
+                            <div class="scoring-row"><span class="scoring-category">Fähigkeiten und Vorteile</span><span class="scoring-badge personal">Persönlich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Alter, Gesundheit, Arbeitsethos</span><span class="scoring-badge personal">Persönlich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Reputation</span><span class="scoring-badge personal">Persönlich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Bindung des Personals</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Firmenname</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Marketing und Branding</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Kundennähe / -bindung</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Wiederkehrende Erlöse</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Organisationsgrad</span><span class="scoring-badge business">Betrieblich</span></div>
+                            <div class="scoring-row"><span class="scoring-category">Geschützte Rechte</span><span class="scoring-badge business">Betrieblich</span></div>
+                        </div>
+                        <div class="highlight-box tip">
+                            <h4>Beispielergebnis</h4>
+                            <p>30% persönlicher Goodwill (nicht übertragbar) + 70% betrieblicher Goodwill (übertragbar). Die Zuordnung ist einzelfallabhängig und muss individuell beurteilt werden.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-panel" id="tab-dauer">
+                        <h3>IDW-Kriterienkatalog (PH 1/2014)</h3>
+                        <p>Typische Abschmelzdauer: <strong>1 bis 13 Jahre</strong>. Die folgenden Kriterien sind systematisch zu prüfen:</p>
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">Kundenbeziehung und Vertragslaufzeiten <span class="accordion-icon">&#9660;</span></button>
+                                <div class="accordion-content"><div class="accordion-body">
+                                    <ul>
+                                        <li>Art der Kundenbeziehung (Laufkundschaft vs. persönliche Beziehung)</li>
+                                        <li>Vertragslaufzeiten und erwartete Verlängerungen</li>
+                                        <li>Höhe und Dauer der Kundenabhängigkeit</li>
+                                        <li>Änderung der Kundenbeziehungen im Zeitablauf</li>
+                                    </ul>
+                                </div></div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">Markt- und Wettbewerbsfaktoren <span class="accordion-icon">&#9660;</span></button>
+                                <div class="accordion-content"><div class="accordion-body">
+                                    <ul>
+                                        <li>Typische Produktlebenszyklen</li>
+                                        <li>Verhalten von Wettbewerbern</li>
+                                        <li>Technologische Veralterung</li>
+                                        <li>Stabilität der Branche</li>
+                                    </ul>
+                                </div></div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">Sonstige Orientierungsgrößen <span class="accordion-icon">&#9660;</span></button>
+                                <div class="accordion-content"><div class="accordion-body">
+                                    <ul>
+                                        <li>Handelsbilanziell festgelegte Nutzungsdauern immaterieller Vermögenswerte</li>
+                                        <li>Allgemeine wirtschaftliche Nutzungsdauer</li>
+                                        <li>Dauer der steuerlichen Abschreibung</li>
+                                        <li>Demografische und biometrische Aspekte</li>
+                                        <li>Erhaltungsaufwendungen zur Kundenbindung</li>
+                                    </ul>
+                                </div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 11: Praxisbeispiel (NEU - Cowork #2) ===== -->
+        <section id="slide-11">
+            <div class="section-inner">
+                <span class="badge badge-orange">Interaktiv</span>
+                <h2>Praxisbeispiel: <span class="accent-text">Bewertungsrechner</span></h2>
+                <p>Ein interaktives Rechenbeispiel für die Bewertung eines KMU mit dem modifizierten Ertragswertverfahren inkl. jahresweiser Abschmelzung der nicht übertragbaren Ertragsanteile.</p>
+
+                <div class="card calculator">
+                    <h3>Schritt 1: Bereinigtes Ergebnis</h3>
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label for="calc-umsatz">Umsatz (TEUR)</label>
+                            <input type="number" id="calc-umsatz" value="2500" min="0" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-ebit">EBIT vor Bereinigung (TEUR)</label>
+                            <input type="number" id="calc-ebit" value="500" min="0" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-unternehmerlohn">Kalk. Unternehmerlohn (TEUR)</label>
+                            <input type="number" id="calc-unternehmerlohn" value="150" min="0" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-sonstige">Sonstige Bereinigungen (TEUR)</label>
+                            <input type="number" id="calc-sonstige" value="30" min="0" oninput="calculateValuation()">
+                        </div>
+                    </div>
+
+                    <h3>Schritt 2: Bewertungsparameter</h3>
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label for="calc-wacc">WACC (%)</label>
+                            <input type="number" id="calc-wacc" value="12" min="1" max="30" step="0.5" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-wachstum">Ewiges Wachstum (%)</label>
+                            <input type="number" id="calc-wachstum" value="1" min="0" max="5" step="0.5" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-steuersatz">Steuersatz (%)</label>
+                            <input type="number" id="calc-steuersatz" value="30" min="0" max="50" step="1" oninput="calculateValuation()">
+                        </div>
+                        <div class="input-group">
+                            <label for="calc-planjahre">Planjahre</label>
+                            <select id="calc-planjahre" onchange="updateAbschmelzInputs(); calculateValuation();">
+                                <option value="3">3 Jahre</option>
+                                <option value="5" selected>5 Jahre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3>Schritt 3: Abschmelzung &ndash; Übertragbarer Anteil pro Jahr</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Der übertragbare Anteil kann über die Planjahre schrittweise abschmelzen, wenn z.B. der persönliche Goodwill nur teilweise auf einen Nachfolger übertragen werden kann.</p>
+                    <div id="abschmelz-container" class="calc-grid" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));">
+                        <!-- Wird dynamisch per JS befüllt -->
+                    </div>
+
+                    <h3 style="margin-top:1.25rem;">Ergebnis</h3>
+                    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.75rem;">
+                        <div style="background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px; padding:1rem 0.75rem; text-align:center; box-shadow:var(--shadow-sm);">
+                            <span class="result-label">Bereinigtes EBIT</span>
+                            <span class="result-value primary" id="res-bereinigtesEbit" style="display:block;">0 TEUR</span>
+                        </div>
+                        <div style="background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px; padding:1rem 0.75rem; text-align:center; box-shadow:var(--shadow-sm);">
+                            <span class="result-label">Netto-Cashflow (FCFF)</span>
+                            <span class="result-value primary" id="res-fcff" style="display:block;">0 TEUR</span>
+                        </div>
+                        <div style="background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px; padding:1rem 0.75rem; text-align:center; box-shadow:var(--shadow-sm);">
+                            <span class="result-label">Wert ohne Abschmelzung</span>
+                            <span class="result-value primary" id="res-wertOhne" style="display:block;">0 TEUR</span>
+                        </div>
+                        <div style="background:linear-gradient(135deg, rgba(30,64,175,0.06), rgba(59,130,246,0.06)); border:2px solid var(--accent-primary); border-radius:10px; padding:1rem 0.75rem; text-align:center; box-shadow:var(--shadow-md);">
+                            <span class="result-label" style="font-weight:600; color:var(--text-primary);">Wert mit Abschmelzung</span>
+                            <span class="result-value" id="res-wertMit" style="display:block; font-size:1.6rem;">0 TEUR</span>
+                        </div>
+                    </div>
+
+                    <!-- Jahresdetail-Tabelle -->
+                    <div style="margin-top:1.25rem; overflow-x:auto;">
+                        <table id="abschmelz-tabelle" class="table-wrapper" style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:var(--bg-tertiary); font-weight:600; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--text-muted);">
+                                    <th style="padding:0.6rem 0.75rem; text-align:left; border-bottom:2px solid var(--border-color);">Jahr</th>
+                                    <th style="padding:0.6rem 0.75rem; text-align:right; border-bottom:2px solid var(--border-color);">FCFF (TEUR)</th>
+                                    <th style="padding:0.6rem 0.75rem; text-align:right; border-bottom:2px solid var(--border-color);">Übertr. (%)</th>
+                                    <th style="padding:0.6rem 0.75rem; text-align:right; border-bottom:2px solid var(--border-color);">Übertr. FCFF</th>
+                                    <th style="padding:0.6rem 0.75rem; text-align:right; border-bottom:2px solid var(--border-color);">Barwert</th>
+                                </tr>
+                            </thead>
+                            <tbody id="abschmelz-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="highlight-box tip">
+                    <h4>Hinweis</h4>
+                    <p>Dies ist ein vereinfachtes Rechenbeispiel zur Veranschaulichung. Eine professionelle Unternehmensbewertung erfordert eine detaillierte Analyse der individuellen Verhältnisse, eine fundierte Zukunftsplanung sowie die Berücksichtigung aller bewertungsrelevanten Faktoren.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 12: Bewertungsprozess ===== -->
+        <section id="slide-12">
+            <div class="section-inner">
+                <span class="badge badge-blue">Prozess</span>
+                <h2>Prozess der <span class="accent-text">Unternehmensbewertung</span></h2>
+                <p>Die Bewertung eines Unternehmens folgt einem strukturierten Prozess von der Aufnahme historischer Daten bis zur Finalisierung des Gutachtens.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">1. Aufnahme historischer Zahlen</h4>
+                        <p class="timeline-desc">Systematische Erfassung der Finanzdaten: Jahresabschlüsse, BWA, Steuerbescheide. Informationsanforderungsliste an das Unternehmen.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">2. Bereinigung der historischen Zahlen</h4>
+                        <p class="timeline-desc">Nachhaltiges, verzerrungsfreies Ertragsniveau sichtbar machen. Bei KMU besonders wichtig.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">3. Planung der Zahlungsmittelüberschüsse</h4>
+                        <p class="timeline-desc">Detailplanung (3-5 Jahre) und Fortführungsphase. Bei KMU oft keine formale Planung vorhanden.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">4. Plausibilitätsbeurteilung</h4>
+                        <p class="timeline-desc">Interne Konsistenz (GuV, Bilanz, Finanzplanung) und externe Plausibilisierung (Marktdaten, Peer Group, Multiplikatoren).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">5. Bestimmung der übertragbaren Ertragskraft</h4>
+                        <p class="timeline-desc">Kernstück der KMU-Bewertung: Scoring-Methode, IDW-Kriterienkatalog und Abschmelz-Methode anwenden.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">6. Finalisierung und Gutachten</h4>
+                        <p class="timeline-desc">Dokumentation, Sensitivitätsanalysen, Vorab-Besprechung, finales Gutachten und Abschlussgespräch.</p>
+                    </div>
+                </div>
+
+                <!-- Cowork #3: Bereinigungen konkreter -->
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Typische Bereinigungsposten bei KMU (Detail)
+                            <span class="accordion-icon">&#9660;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li><strong>Kalkulatorischer Unternehmerlohn:</strong> Marktübliche Vergütung eines angestellten Geschäftsführers mit vergleichbarer Qualifikation ansetzen</li>
+                                    <li><strong>Entlohnung Familienangehöriger:</strong> Vergütung auf Marktgerechtigkeit prüfen und ggf. anpassen</li>
+                                    <li><strong>Private Kfz-Nutzung / Reisen:</strong> Private Aufwendungen identifizieren und eliminieren</li>
+                                    <li><strong>Gesellschafterdarlehen:</strong> Darlehen und Sicherheiten auf Marktkonformität prüfen</li>
+                                    <li><strong>Verdeckte Gewinnausschüttungen:</strong> Nicht marktgerechte Leistungsbeziehungen korrigieren</li>
+                                    <li><strong>Einmal- und Sondereffekte:</strong> Außergewöhnliche Erträge/Aufwendungen eliminieren</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box tip">
+                    <h4>Wichtig</h4>
+                    <p>Ohne einen korrekt angesetzten kalkulatorischen Unternehmerlohn ist der ermittelte Unternehmenswert in der Regel überhöht. Die Bereinigung ist zwingende Voraussetzung für eine sachgerechte Bewertung.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 13: Wertsteigerung (Cowork #5) ===== -->
+        <section id="slide-13">
+            <div class="section-inner">
+                <span class="badge badge-orange">Handlungsfelder</span>
+                <h2>Wertsteigerung <span class="accent-text">bei KMU</span></h2>
+                <p>Die KMU-spezifischen Herausforderungen sind zugleich Ansatzpunkte für eine aktive Steigerung des Unternehmenswertes. Die Maßnahmen setzen an zwei Hebeln an.</p>
+
+                <h3>1. Den Bewertungs-Triangel optimieren</h3>
+                <div class="feature-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128176;</div>
+                        <div class="feature-title">Cashflows steigern</div>
+                        <p class="feature-desc">Höhere Umsätze, verbesserte Margen, effizienterer Ressourceneinsatz</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9202;</div>
+                        <div class="feature-title">Zeitraum verlängern</div>
+                        <p class="feature-desc">Langfristige Wettbewerbsvorteile aufbauen, Kundenbindung stärken</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon orange">&#128737;</div>
+                        <div class="feature-title">Risiken senken</div>
+                        <p class="feature-desc">Diversifikation, stabile Prozesse, robuste Geschäftsbeziehungen</p>
+                    </div>
+                </div>
+
+                <h3>2. KMU-Besonderheiten aktiv entgegenwirken</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Zweite Führungsebene aufbauen <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body">
+                            <p>Die Abhängigkeit vom Inhaber reduzieren und die Übertragbarkeit der Ertragskraft sicherstellen. Schlüsselpositionen doppelt besetzen und Verantwortung delegieren.</p>
+                        </div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Prozesse und Abläufe dokumentieren <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body">
+                            <p>Systematische Dokumentation der Geschäftsprozesse erhöht die Transparenz und erleichtert die Übergabe an einen neuen Eigentümer erheblich.</p>
+                        </div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Kundenkontakte im Unternehmen verteilen <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body">
+                            <p>Kundenbeziehungen nicht ausschließlich auf den Unternehmer konzentrieren, sondern im Team verankern. So wird der betriebliche Goodwill gestärkt.</p>
+                        </div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Datenqualität und Reporting verbessern <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body">
+                            <p>Professionelles Rechnungswesen und Reporting aufbauen. Bessere Daten führen zu belastbareren Planungen und erhöhen das Vertrauen potenzieller Käufer.</p>
+                        </div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">Konzentrationsrisiken reduzieren <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body">
+                            <p>Kunden- und Lieferantenportfolio diversifizieren. Abhängigkeiten von einzelnen Großkunden oder Schlüssellieferanten systematisch abbauen.</p>
+                        </div></div>
+                    </div>
+                </div>
+
+                <div class="highlight-box tip">
+                    <h4>Strategische Empfehlung</h4>
+                    <p>Wer den Wert seines Unternehmens langfristig steigern möchte, sollte frühzeitig &ndash; idealerweise Jahre vor einem geplanten Verkauf &ndash; an diesen Stellschrauben arbeiten. Eine frühzeitige Analyse der eigenen Werthebel ist der erste Schritt.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SLIDE 14: Zusammenfassung & Kontakt ===== -->
+        <section id="slide-14">
+            <div class="section-inner">
+                <span class="badge badge-blue">Zusammenfassung</span>
+                <h2>Kernaussagen und <span class="accent-text">Kontakt</span></h2>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">1. Es gibt nicht den einen Unternehmenswert <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Ein ermittelter Wert wird neben den Charakteristika des Bewertungsgegenstands auch maßgeblich durch den Bewertungsanlass und die dadurch bedingten Annahmen mitbestimmt.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">2. Zukunftserfolgsverfahren als Standard <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Allgemein anerkannt ist, Unternehmen anhand der realistischerweise zu erzielenden finanziellen Überschüsse zu bewerten (DCF- oder Ertragswertverfahren). Multiplikatoren eignen sich zur Plausibilisierung.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">3. Preis ist nicht gleich Wert <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Marktpreise können von berechneten Werten abweichen, etwa durch Machtgefälle im Verhandlungsprozess oder persönliche Umstände.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">4. Drei zentrale Werttreiber <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Der Unternehmenswert wird durch die Höhe der Zahlungsmittelüberschüsse, deren Länge/Wachstum sowie das Gesamtrisiko beeinflusst.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">5. KMU werden zu niedrigeren Preisen gehandelt <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Aufgrund spezifischer Charakteristika &ndash; insbesondere der oft nicht voll übertragbaren Erfolgsfaktoren &ndash; werden KMU typischerweise mit 30-50% Abschlag bewertet.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">6. KMU-Faktoren müssen quantifiziert werden <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Eingeschränkte Übertragbarkeit, Inhaberprägung und Konzentrationsrisiken müssen in der Bewertung explizit berücksichtigt und quantifiziert werden.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">7. Vereinfachende Verfahren oft nicht zielführend <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Bewertungsverfahren, die auf eine Schätzung der zukünftigen Zahlungsmittelüberschüsse verzichten, sind meist nicht zielführend und führen oft zu unzutreffenden Werten.</p></div></div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">8. Frühzeitig an der Wertsteigerung arbeiten <span class="accordion-icon">&#9660;</span></button>
+                        <div class="accordion-content"><div class="accordion-body"><p>Maßnahmen zur Wertsteigerung setzen an den drei zentralen Werttreibern sowie an den KMU-spezifischen Stellschrauben an und sollten frühzeitig begonnen werden.</p></div></div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:2rem; border-color:var(--accent-primary);">
+                    <h3 style="color:var(--accent-primary);">Morgenwert Valuation &amp; Advisory GmbH</h3>
+                    <p style="margin-bottom:0.5rem;">Partner in allen Fragen rund um die Bewertung von Unternehmen, die Erstellung von Geschäftsplanungen und Finanzmodellen sowie damit verwandten betriebswirtschaftlichen Fragestellungen.</p>
+                    <p style="margin-bottom:0.5rem;"><strong>Stefan Euring</strong><br>
+                    Geschäftsführender Gesellschafter<br>
+                    Öffentlich bestellter und vereidigter Sachverständiger<br>
+                    Certified Valuation Analyst (CVA)</p>
+                    <p style="margin-bottom:0;">
+                        Beim Strohhause 27, 6. OG &bull; 20097 Hamburg<br>
+                        Tel.: +49 40 6081 4195 &bull; Mobil: +49 176 1515 9395<br>
+                        <a href="mailto:stefan.euring@morgenwert.de" style="color:var(--accent-primary);">stefan.euring@morgenwert.de</a> &bull;
+                        <a href="https://www.morgenwert.de" style="color:var(--accent-primary);" target="_blank">www.morgenwert.de</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Active Navigation
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Scroll Events
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            updateActiveNav();
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        menuToggle.addEventListener('click', () => { navSidebar.classList.toggle('open'); });
+
+        // Close menu on link click (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) { navSidebar.classList.remove('open'); }
+            });
+        });
+
+        // Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabGroup = btn.closest('.tabs');
+                const tabId = btn.getAttribute('data-tab');
+                tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                tabGroup.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === tabId) { panel.classList.add('active'); }
+                });
+            });
+        });
+
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            // Don't navigate when focus is in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+            const sections = document.querySelectorAll('section');
+            const currentIdx = Array.from(sections).findIndex(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 300;
+            });
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                const next = sections[Math.min(currentIdx + 1, sections.length - 1)];
+                next.scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const prev = sections[Math.max(currentIdx - 1, 0)];
+                prev.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Valuation Calculator
+        // Abschmelz-Inputs dynamisch generieren
+        function updateAbschmelzInputs() {
+            const n = parseInt(document.getElementById('calc-planjahre').value) || 5;
+            const container = document.getElementById('abschmelz-container');
+            // Default-Werte: übertragbarer Anteil schmilzt schrittweise ab
+            const defaults3 = [90, 80, 70];
+            const defaults5 = [100, 90, 80, 70, 70];
+            const defaults = n === 3 ? defaults3 : defaults5;
+            // Bestehende Werte merken
+            const existing = [];
+            container.querySelectorAll('input').forEach(inp => existing.push(inp.value));
+            container.innerHTML = '';
+            for (let i = 0; i < n; i++) {
+                const val = existing[i] !== undefined ? existing[i] : defaults[i];
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                div.innerHTML = '<label for="calc-abschmelz-' + i + '">Jahr ' + (i+1) + ' (%)</label>' +
+                    '<input type="number" id="calc-abschmelz-' + i + '" value="' + val + '" min="0" max="100" step="5" oninput="calculateValuation()">';
+                container.appendChild(div);
+            }
+        }
+
+        function calculateValuation() {
+            const umsatz = parseFloat(document.getElementById('calc-umsatz').value) || 0;
+            const ebit = parseFloat(document.getElementById('calc-ebit').value) || 0;
+            const unternehmerlohn = parseFloat(document.getElementById('calc-unternehmerlohn').value) || 0;
+            const sonstige = parseFloat(document.getElementById('calc-sonstige').value) || 0;
+            const wacc = (parseFloat(document.getElementById('calc-wacc').value) || 12) / 100;
+            const wachstum = (parseFloat(document.getElementById('calc-wachstum').value) || 1) / 100;
+            const steuersatz = (parseFloat(document.getElementById('calc-steuersatz').value) || 30) / 100;
+            const n = parseInt(document.getElementById('calc-planjahre').value) || 5;
+
+            // Bereinigtes EBIT
+            const bereinigtesEbit = ebit - unternehmerlohn - sonstige;
+
+            // Vereinfachter FCFF (EBIT * (1-t))
+            const fcff = bereinigtesEbit * (1 - steuersatz);
+
+            // Wert ohne Abschmelzung (ewige Rente mit Wachstum)
+            const wertOhne = (wacc > wachstum && fcff > 0) ? fcff / (wacc - wachstum) : 0;
+
+            // --- Phase 1: Detailplanung mit jahresweiser Abschmelzung ---
+            const uebertragbarWerte = [];
+            for (let i = 0; i < n; i++) {
+                const el = document.getElementById('calc-abschmelz-' + i);
+                uebertragbarWerte.push(el ? (parseFloat(el.value) || 0) / 100 : 1);
+            }
+
+            let phase1Summe = 0;
+            const tabellenDaten = [];
+            for (let i = 0; i < n; i++) {
+                const jahr = i + 1;
+                const uebertragbarerAnteil = uebertragbarWerte[i];
+                const uebertragbarerFCFF = fcff * uebertragbarerAnteil;
+                const diskontFaktor = Math.pow(1 + wacc, -jahr);
+                const barwert = uebertragbarerFCFF * diskontFaktor;
+                phase1Summe += barwert;
+                tabellenDaten.push({
+                    jahr: jahr,
+                    fcff: fcff,
+                    uebertragbarPct: uebertragbarWerte[i] * 100,
+                    uebertragbar: uebertragbarerFCFF,
+                    barwert: barwert
+                });
+            }
+
+            // --- Phase 2: Terminal Value (ab Jahr n+1, kein Abschmelz-Abzug) ---
+            let terminalValue = 0;
+            if (wacc > wachstum && fcff > 0) {
+                const tvEndJahr = fcff * (1 + wachstum) / (wacc - wachstum);
+                terminalValue = tvEndJahr * Math.pow(1 + wacc, -n);
+            }
+
+            const wertMit = phase1Summe + terminalValue;
+
+            // Tabelle befüllen
+            const tbody = document.getElementById('abschmelz-tbody');
+            const fmt = (val) => val.toLocaleString('de-DE', { maximumFractionDigits: 0 });
+            const fmtPct = (val) => val.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + '%';
+            let html = '';
+            tabellenDaten.forEach(row => {
+                html += '<tr style="border-bottom:1px solid var(--border-color);">' +
+                    '<td style="padding:0.5rem 0.75rem; font-weight:500;">Jahr ' + row.jahr + '</td>' +
+                    '<td style="padding:0.5rem 0.75rem; text-align:right;">' + fmt(row.fcff) + '</td>' +
+                    '<td style="padding:0.5rem 0.75rem; text-align:right; color:var(--accent-primary); font-weight:600;">' + fmtPct(row.uebertragbarPct) + '</td>' +
+                    '<td style="padding:0.5rem 0.75rem; text-align:right;">' + fmt(row.uebertragbar) + '</td>' +
+                    '<td style="padding:0.5rem 0.75rem; text-align:right; font-weight:600; color:var(--accent-primary);">' + fmt(row.barwert) + '</td>' +
+                    '</tr>';
+            });
+            // Summenzeile Phase 1
+            html += '<tr style="border-bottom:1px solid var(--border-color); background:var(--bg-tertiary);">' +
+                '<td style="padding:0.5rem 0.75rem; font-weight:700;" colspan="4">Summe Phase 1 (Detailplanung)</td>' +
+                '<td style="padding:0.5rem 0.75rem; text-align:right; font-weight:700; color:var(--accent-primary);">' + fmt(phase1Summe) + '</td></tr>';
+            // Terminal Value
+            html += '<tr style="border-bottom:1px solid var(--border-color);">' +
+                '<td style="padding:0.5rem 0.75rem; font-weight:500;">ab Jahr ' + (n+1) + '</td>' +
+                '<td style="padding:0.5rem 0.75rem; text-align:right;" colspan="2"><span style="font-size:0.8rem; color:var(--text-muted);">Terminal Value (ewige Rente)</span></td>' +
+                '<td style="padding:0.5rem 0.75rem; text-align:right;">&mdash;</td>' +
+                '<td style="padding:0.5rem 0.75rem; text-align:right; font-weight:600; color:var(--accent-primary);">' + fmt(terminalValue) + '</td></tr>';
+            // Gesamtwert
+            html += '<tr style="background:linear-gradient(135deg, rgba(30,64,175,0.08), rgba(59,130,246,0.08));">' +
+                '<td style="padding:0.65rem 0.75rem; font-weight:700; font-size:0.95rem;" colspan="4">Unternehmenswert (mit Abschmelzung)</td>' +
+                '<td style="padding:0.65rem 0.75rem; text-align:right; font-weight:700; font-size:1.1rem; color:var(--accent-orange);">' + fmt(wertMit) + ' TEUR</td></tr>';
+            tbody.innerHTML = html;
+
+            // Übersicht-Ergebnisse aktualisieren
+            document.getElementById('res-bereinigtesEbit').textContent = fmt(bereinigtesEbit) + ' TEUR';
+            document.getElementById('res-fcff').textContent = fmt(fcff) + ' TEUR';
+            document.getElementById('res-wertOhne').textContent = fmt(wertOhne) + ' TEUR';
+            document.getElementById('res-wertMit').textContent = fmt(wertMit) + ' TEUR';
+        }
+
+        // Initial calculations
+        updateAbschmelzInputs();
+        updateProgressBar();
+        updateActiveNav();
+        calculateValuation();
+    </script>
+</body>
+</html>
