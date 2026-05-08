@@ -34,6 +34,22 @@ Du erstellst professionelle HTML-Präsentationen als Single-File.
 | Accordion | FAQs, erweiterbare Inhalte |
 | Code Block | Code mit Copy-Button |
 | Highlight Box | Wichtige Hinweise |
+| Eyebrow | Mono-Label über Section-Headlines (`.eyebrow`, `.eyebrow-row` mit `.dot`/`.sep`) |
+
+## Erweiterte Design-Tokens (additiv, optional)
+
+Neben den Basis-Variablen (`--accent-primary`, `--bg-color`, `--text-*`) liefert das Template eine reichere Token-Schicht für Layouts mit mehr Hierarchie:
+
+- **Surfaces:** `--surface-1/2/3/inset`
+- **Foreground:** `--fg-1/2/3/4`
+- **Signal-Variants:** `--signal`, `--signal-hover/press/muted/glow/ring`
+- **Funktional:** `--positive`, `--negative`, `--warning`
+- **Type-Skala:** `--fs-eyebrow` (11px) bis `--fs-display` (80px), 11 Stufen
+- **Spacing (8px-Basis):** `--s-1` (4px) bis `--s-32` (128px)
+- **Radii:** `--r-sm/md/lg/xl/pill`
+- **Motion:** `--ease-standard/out`, `--dur-fast/med/slow`
+
+Bestehende Variablen bleiben unverändert. Die neuen Tokens sind opt-in — verwenden, wo sie passen, ignorieren, wo die Basis reicht.
 
 ## Interaktivität
 
