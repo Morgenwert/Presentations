@@ -13,7 +13,7 @@ Du bist ein Experte fuer das Erstellen professioneller HTML-Prasentationen. Wenn
 
 ## Design-System
 
-### Farbpalette (CSS Variables)
+### Farbpalette (CSS Variables — Basis)
 - --accent-primary: #3b82f6 (Blau)
 - --accent-secondary: #8b5cf6 (Lila)
 - --accent-tertiary: #06b6d4 (Cyan)
@@ -22,6 +22,41 @@ Du bist ein Experte fuer das Erstellen professioneller HTML-Prasentationen. Wenn
 - --bg-tertiary: #334155
 - --text-primary: #f1f5f9
 - --text-secondary: #94a3b8
+
+### Erweiterte Tokens (additiv, fuer reichere Layouts)
+
+Inspiriert vom Superhuman-CFO-Deck. Bestehende Tokens bleiben unveraendert; diese kommen ergaenzend dazu und koennen gemischt werden.
+
+**Surface-Hierarchie** (semantisch ueber den `--bg-*`-Variablen):
+- `--surface-1` / `--surface-2` / `--surface-3` / `--surface-inset` — Sektion → Karte → Hover → Code-Inset
+
+**Foreground-Hierarchie** (4 Stufen, gehen ueber `--text-*` hinaus):
+- `--fg-1` (Headlines) → `--fg-2` (Body) → `--fg-3` (Labels) → `--fg-4` (dim/disabled)
+
+**Signal-Akzent-Variants** (rund um `--accent-primary`):
+- `--signal`, `--signal-hover`, `--signal-press`, `--signal-muted`, `--signal-glow`, `--signal-ring`
+
+**Funktional (sparsam, nur fuer Status):**
+- `--positive` (#10b981), `--negative` (#ef4444), `--warning` (#f59e0b)
+
+**Type-Familien:**
+- `--font-display`, `--font-body`, `--font-mono`
+- Default: System-Stack (`-apple-system`, `BlinkMacSystemFont`, `'Segoe UI'`); Mono: `'SF Mono'`, `'JetBrains Mono'`, `'Fira Code'`, `ui-monospace`. Keine CDN-Fonts.
+
+**Type-Skala:** `--fs-eyebrow` (11px) → `--fs-micro` (12px) → `--fs-small` (14px) → `--fs-body` (16px) → `--fs-lede` (18px) → `--fs-h5` (20px) → `--fs-h4` (24px) → `--fs-h3` (32px) → `--fs-h2` (44px) → `--fs-h1` (60px) → `--fs-display` (80px)
+
+**Type-Tracking:** `--track-display` (-0.025em), `--track-heading` (-0.015em), `--track-body` (0), `--track-mono` (0.08em)
+
+**Type-Leading:** `--lh-display` (1.02), `--lh-heading` (1.1), `--lh-body` (1.55)
+
+**Spacing (8px-Basis):** `--s-1` (4px) bis `--s-32` (128px) in nichtlinearen Schritten — `s-1, s-2, s-3, s-4, s-5, s-6, s-8, s-10, s-12, s-16, s-20, s-24, s-32`
+
+**Radii:** `--r-sm` (6px), `--r-md` (10px), `--r-lg` (16px, kanonisch fuer Karten), `--r-xl` (20px, Hero), `--r-pill` (999px)
+
+**Motion:**
+- `--ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1)` — fuer normale Uebergaenge
+- `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)` — fuer "ankommende" Elemente
+- `--dur-fast` (120ms), `--dur-med` (220ms), `--dur-slow` (420ms)
 
 ### Visuelle Effekte
 - Glassmorphism: backdrop-filter: blur(20px) mit semi-transparentem Hintergrund
@@ -94,6 +129,21 @@ Fuer wichtige Hinweise:
 - Gradient-Hintergrund (dezent)
 - Farbiger Rand
 - Icon oder Titel
+
+### Eyebrow (Mono-Label)
+Kleines, getracktes, all-caps Mono-Label ueber jeder Section-Headline. Operator-/Cockpit-Stil. Klassen: `.eyebrow` (Standalone-Label) oder `.eyebrow-row` (mit `.dot` und `.sep`-Helpers fuer "● Kontext / Untertitel"-Zeilen).
+
+```html
+<div class="eyebrow-row">
+  <span class="dot"></span>
+  <span>Section-Kontext</span>
+  <span class="sep">/</span>
+  <span>Untertitel</span>
+</div>
+<h2>Eigentliche Headline</h2>
+```
+
+Liefert sofort einen professionellen, datenorientierten Look. Sparsam einsetzen — eine Eyebrow-Zeile pro Section reicht.
 
 ## Struktur-Template
 

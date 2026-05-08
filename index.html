@@ -21,6 +21,91 @@
             --shadow-color: rgba(0, 0, 0, 0.08);
             --gradient-primary: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             --gradient-secondary: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
+
+            /* === Erweiterte Tokens (Superhuman-CFO-inspiriert, additiv) === */
+
+            /* Surfaces */
+            --surface-1: var(--bg-secondary);
+            --surface-2: var(--bg-tertiary);
+            --surface-3: #e2e8f0;
+            --surface-inset: #f1f5f9;
+
+            /* Foreground-Hierarchie (4 Stufen) */
+            --fg-1: var(--text-primary);
+            --fg-2: var(--text-secondary);
+            --fg-3: var(--text-muted);
+            --fg-4: #cbd5e1;
+
+            /* Signal-Akzent (Variants um --accent-primary) */
+            --signal: var(--accent-primary);
+            --signal-hover: #60a5fa;
+            --signal-press: #2563eb;
+            --signal-muted: rgba(59, 130, 246, 0.12);
+            --signal-glow: rgba(59, 130, 246, 0.28);
+            --signal-ring: rgba(59, 130, 246, 0.35);
+
+            /* Funktional (Status, sparsam) */
+            --positive: #10b981;
+            --negative: #ef4444;
+            --warning: #f59e0b;
+
+            /* Type-Familien */
+            --font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+            /* Type-Skala */
+            --fs-eyebrow: 11px;
+            --fs-micro: 12px;
+            --fs-small: 14px;
+            --fs-body: 16px;
+            --fs-lede: 18px;
+            --fs-h5: 20px;
+            --fs-h4: 24px;
+            --fs-h3: 32px;
+            --fs-h2: 44px;
+            --fs-h1: 60px;
+            --fs-display: 80px;
+
+            /* Type-Tracking */
+            --track-display: -0.025em;
+            --track-heading: -0.015em;
+            --track-body: 0;
+            --track-mono: 0.08em;
+
+            /* Type-Leading */
+            --lh-display: 1.02;
+            --lh-heading: 1.1;
+            --lh-body: 1.55;
+
+            /* Spacing-Skala (8px-Basis) */
+            --s-1: 4px;
+            --s-2: 8px;
+            --s-3: 12px;
+            --s-4: 16px;
+            --s-5: 20px;
+            --s-6: 24px;
+            --s-8: 32px;
+            --s-10: 40px;
+            --s-12: 48px;
+            --s-16: 64px;
+            --s-20: 80px;
+            --s-24: 96px;
+            --s-32: 128px;
+
+            /* Radii */
+            --r-sm: 6px;
+            --r-md: 10px;
+            --r-lg: 16px;
+            --r-xl: 20px;
+            --r-pill: 999px;
+
+            /* Motion */
+            --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --dur-fast: 120ms;
+            --dur-med: 220ms;
+            --dur-slow: 420ms;
         }
 
         [data-theme="dark"] {
@@ -34,6 +119,17 @@
             --glass-bg: rgba(30, 41, 59, 0.7);
             --glass-border: rgba(148, 163, 184, 0.1);
             --shadow-color: rgba(0, 0, 0, 0.3);
+
+            /* Dark-Mode-Overrides der erweiterten Tokens */
+            --surface-1: #0f172a;
+            --surface-2: #1e293b;
+            --surface-3: #253349;
+            --surface-inset: #0a0f1c;
+            --fg-4: #64748b;
+            --signal: #4f8cc9;
+            --signal-hover: #6ba3dc;
+            --signal-press: #3d75ae;
+            --signal-muted: #2a4461;
         }
 
         * {
@@ -247,6 +343,44 @@
         p {
             color: var(--text-secondary);
             margin-bottom: 1rem;
+        }
+
+        /* Eyebrow — kleines Mono-Label ueber Headlines (Operator-Style) */
+        .eyebrow,
+        .mono-label {
+            font-family: var(--font-mono);
+            font-size: var(--fs-eyebrow);
+            font-weight: 500;
+            letter-spacing: var(--track-mono);
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .eyebrow-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: var(--fs-eyebrow);
+            font-weight: 500;
+            letter-spacing: var(--track-mono);
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .eyebrow-row .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--signal);
+            flex-shrink: 0;
+        }
+
+        .eyebrow-row .sep {
+            color: var(--text-muted);
+            opacity: 0.5;
         }
 
         /* Glass Cards */
