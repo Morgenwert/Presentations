@@ -67,34 +67,7 @@ Der Bewertungsanlass bestimmt Funktion und Wertkonzept. Steuerrechtliche Anläss
 
 ---
 
-## Slide 5: Ertragswert & DCF
-
-**Bewertungsformel:**
-
-```
-FCFF = EBIT - Steuern auf EBIT + Abschreibungen - Nettoinvestitionen
-
-WACC = EK-Kosten × EK/GK + FK-Kosten (nach Steuer) × FK/GK
-
-W(EK) = Σ FCFF / (1 + WACC)^t - verzinsliches FK + nicht-betriebsnotwendiges Vermögen
-```
-
-**⚠️ WICHTIG: KMU-Risikoaufschläge nach IDW S 1 2026, Tz. 168**
-
-Der Ansatz von Risikozuschlägen für KMU ist bei objektiven Bewertungen **nicht sachgerecht**:
-- ❌ Size Premium (Größenabschlag)
-- ❌ Illiquiditätsprämie
-- ❌ Fungibilitätsabschlag
-
-**Richtig nach 2026:**
-KMU-Besonderheiten über **übertragbare Ertragskraft** abbilden:
-- Abschmelzung personenbezogener Erfolgsfaktoren
-- Kalkulatorischer Unternehmerlohn
-- Sphären-Trennung
-
----
-
-## Slide 6: Der Anlass bestimmt Methode und Wert
+## Slide 5: Der Anlass bestimmt Methode und Wert
 
 **Es gibt nicht "den einen" Unternehmenswert!**
 
@@ -121,7 +94,98 @@ KMU-Besonderheiten über **übertragbare Ertragskraft** abbilden:
 
 ---
 
-## Slide 7: Wert vs. Preis
+## Slide 6: Bewertungsprozess (6 Schritte)
+
+1. **Aufnahme historischer Zahlen**
+   - Jahresabschlüsse, BWA, Steuerbescheide
+
+2. **Bereinigung**
+   - Unternehmerlohn, Familienangehörige, Sphären-Trennung
+
+3. **Planung der Zahlungsmittelüberschüsse**
+   - Detailplanung (3-5 Jahre) + Fortführungsphase
+
+4. **Plausibilitätsbeurteilung**
+   - Intern (Konsistenz) + Extern (Markt, Peer Group)
+
+5. **Bestimmung der übertragbaren Ertragskraft**
+   - Scoring, IDW-Kriterien, Abschmelzung
+
+6. **Finalisierung und Gutachten**
+   - Dokumentation, Sensitivität, Abschlussgespräch
+
+---
+
+## Slide 7: Bereinigung – die Ausgangsbasis muss stimmen
+
+**Historische Zahlen sind der Aufsatzpunkt von Planung und Bewertung – aber die Ist-Zahlen eines KMU sind verzerrt** (private und betriebliche Sphäre überschneiden sich systematisch).
+
+**Typische Bereinigungsposten:**
+
+| Bereich | Was bereinigt wird |
+|---|---|
+| **Unternehmerlohn** | Differenz zwischen Entnahme und marktüblichem GF-Gehalt (30/80-T€-Beispiel; auch der 0-€-Fall zählt) |
+| **Familienangehörige** | Über-/unter dem Marktniveau gezahlte Gehälter (auch "unbezahlte" Arbeit zählt) |
+| **Gesellschafterdarlehen** | Zinsen ober-/unterhalb des Marktniveaus |
+| **Privatsphäre** | Kfz, Reisen, Bewirtung, Immobilien (Miete, Instandhaltung) |
+| **Sondereffekte** | Einmaleffekte, außergewöhnliche Erträge/Aufwendungen, Prozesskosten |
+| **Periodenverschiebungen** | Zeitversetzte Rückstellungen verzerren einzelne Trendjahre |
+
+**Die Logik — zwei Fragen je Posten und je Jahr:**
+1. Stammt die Position aus dem Geschäftsmodell (systematisch/wiederkehrend → behalten) oder ist sie einmalig (→ bereinigen)?
+2. Ist sie drittvergleichsfähig oder nur durch die Gesellschafterbeziehung gerechtfertigt (→ bereinigen)?
+
+**📌 Kernaussage:** Ziel ist ein nachhaltiges, verzerrungsfreies Ertragsniveau (IDW S 1, Tz. 73). Was hier unkorrigiert bleibt, wird in die Planung perpetuiert — jede darauf aufbauende Bewertung ist dann fehlerhaft.
+
+---
+
+## Slide 8: Planung – muss plausibel sein
+
+**Integrierte Planung ist Pflicht, nicht Option:** Plan-GuV + Plan-Bilanz + Finanzplanung müssen ein abgestimmtes Bild ergeben (IDW S 1, Tz. 77). Detailphase 3–5 Jahre + Konvergenz/ewige Rente; bei KMU oft keine formale Planung vorhanden → mit dem Inhaber gemeinsam erarbeiten.
+
+**Interne Plausibilisierung (Konsistenz):**
+- GuV ↔ Bilanz ↔ Finanzplan: Ergebnis wandert in Equity, Liquidität geht auf
+- Umsatzwachstum, Margen und Investitionen zueinander stimmig
+- Working Capital entwickelt sich nachvollziehbar zum Umsatz
+- Zinsaufwendungen passen zu verzinslichen Beständen und Zinssätzen
+
+**Externe Plausibilisierung (Markt-Check):**
+- Vergleich mit Marktdaten (Branche, Wettbewerb, Peer Group)
+- Multiplikatoren-Check (EV/Umsatz, EV/EBITDA, KGV)
+- Branchenstudien, Analystenschätzungen (bei vergleichbaren Unternehmen)
+
+**📌 Kernaussage:** Eine gründliche Plausibilisierung erhöht die Belastbarkeit und Verteidigungsfähigkeit des Bewertungsergebnisses gegenüber Dritten erheblich.
+
+---
+
+## Slide 9: Ertragswert & DCF
+
+**Bewertungsformel:**
+
+```
+FCFF = EBIT - Steuern auf EBIT + Abschreibungen - Nettoinvestitionen
+
+WACC = EK-Kosten × EK/GK + FK-Kosten (nach Steuer) × FK/GK
+
+W(EK) = Σ FCFF / (1 + WACC)^t - verzinsliches FK + nicht-betriebsnotwendiges Vermögen
+```
+
+**⚠️ WICHTIG: KMU-Risikoaufschläge nach IDW S 1 2026, Tz. 168**
+
+Der Ansatz von Risikozuschlägen für KMU ist bei objektiven Bewertungen **nicht sachgerecht**:
+- ❌ Size Premium (Größenabschlag)
+- ❌ Illiquiditätsprämie
+- ❌ Fungibilitätsabschlag
+
+**Richtig nach 2026:**
+KMU-Besonderheiten über **übertragbare Ertragskraft** abbilden:
+- Abschmelzung personenbezogener Erfolgsfaktoren
+- Kalkulatorischer Unternehmerlohn
+- Sphären-Trennung
+
+---
+
+## Slide 10: Wert vs. Preis
 
 **Das Grenzpreis-Konzept:**
 
@@ -142,7 +206,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 8: KMU-Besonderheiten
+## Slide 11: KMU-Besonderheiten
 
 **Typischer KMU-Abschlag: 30-50%**
 
@@ -162,7 +226,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 9: Übertragbare Ertragskraft
+## Slide 12: Übertragbare Ertragskraft
 
 **Welche Rolle spielt der Eigner? (5 typische Rollen):**
 
@@ -187,15 +251,29 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 | Organisationsgrad | Loyalität zum Inhaber |
 | Patente, geschützte Rechte | Reputation der Person |
 
-**Formen der Übertragbarkeit:**
-- Dauerhaft (Apotheke, Tankstelle)
-- Partiell (Kundenstamm schmilzt ab)
-- Temporär (Vertragslaufzeiten)
-- Gar nicht (persönliche Dienstleistungen)
+---
+
+## Slide 13: Formen der Übertragbarkeit
+
+**Wie lange bleibt die Ertragskraft nach dem Eigentumswechsel bestehen?** — Fortführung der Goodwill-Trennung (Slide 12): betrieblicher Goodwill bleibt im Wert, persönlicher Goodwill erlischt mit dem Eigentümer. Die entscheidende Frage ist: wie und wann?
+
+| Art | Verlauf | Beispiel | Bewertungskonsequenz |
+|---|---|---|---|
+| **Dauerhaft** | Ertragskraft bleibt voll erhalten | Standortbezogenes Geschäft mit Laufkundschaft (Apotheke, Tankstelle) | Standardbewertung nach IDW S 1 ohne Anpassung („Normalfall") |
+| **Partiell** | Ertragskraft schmilzt langsam ab | Kundenstamm geht mit der Zeit verloren | **Abschmelz-Methode**: Reduktion auf den übertragbaren Anteil (häufigster Fall) |
+| **Temporär** | Zuerst gesichert, dann abfallend | Restlaufzeiten der Kundenverträge, Patentschutz | Abschmelzen innerhalb des Detailplanungszeitraums |
+| **Temporär verzögert** | Vorübergehend erhalten, dann Abfall | GF bleibt als Gesellschafter eine Übergangszeit im Unternehmen | Übergangsphase modellieren (Verbleibeklausel, Übergabevereinbarung) |
+| **Gar nicht** | Ertragskraft nicht übertragbar | Persönliche Dienstleistungen, Geschäfte mit Freunden/Verwandten | **Liquidationswert** als relevante Wertgröße |
+
+**⚠️ Sonderfall: Die Person bleibt im Unternehmen** (z.B. Umwandlung, Scheidung bei Fortführung)
+- Personenbezogene Erfolgsfaktoren zählen **nur bis Renteneintritt / Sterbedatum** — endlicher Horizont, **keine ewige Rente**.
+- Für die nachhaltige Ertragskraft gilt aber: Ausscheiden und Ersatzbarkeit der Person weiter denken.
+
+**📌 Kernaussage:** Zu bewerten ist nur die Ertragskraft, die ein neuer Eigentümer ohne das Mitwirken des Verkäufers erzielen kann.
 
 ---
 
-## Slide 10: Abschmelz-Methode
+## Slide 14: Abschmelz-Methode
 
 **(a) Abschmelzung des Kundenstamms**
 - Bei isolierbaren Faktoren (z.B. Kundenstamm)
@@ -214,7 +292,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 11: Abschmelz-Parameter
+## Slide 15: Abschmelz-Parameter
 
 **Scoring-Methode (MuM-Methode):**
 10 Kategorien (je 10%):
@@ -237,7 +315,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 12: Abschmelzung in der Praxis
+## Slide 16: Abschmelzung in der Praxis
 
 **4-Schritte-Vorgehen:**
 
@@ -256,29 +334,20 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 13: Bewertungsprozess (6 Schritte)
+## Slide 17: KMU-Multiples als Scheinlösung?
 
-1. **Aufnahme historischer Zahlen**
-   - Jahresabschlüsse, BWA, Steuerbescheide
+**Warum Multiplikatoren allein nicht reichen:**
 
-2. **Bereinigung**
-   - Unternehmerlohn, Familienangehörige, Sphären-Trennung
+- **Herkunft der Vergleichswerte:** Börsennotierte Peers sind größer, liquider, diversifizierter → ihre Multiples sind systematisch höher.
+- **Size Discount wird nicht abgebildet:** Der typische KMU-Abschlag (30-50%) ist ein **transaktionspreisliches Phänomen**, keine DCF-Korrektur.
+- **Übertragbarkeit fehlt:** Multiples sagen nichts über personenbezogene Erfolgsfaktoren, Abschmelzbedarf oder Unternehmerlohn.
+- **Vergangenheit vs. Zukunft:** Multiples leiten sich aus historischen Kennzahlen ab — die Bewertung braucht aber die **zukünftigen** Überschüsse.
 
-3. **Planung der Zahlungsmittelüberschüsse**
-   - Detailplanung (3-5 Jahre) + Fortführungsphase
-
-4. **Plausibilitätsbeurteilung**
-   - Intern (Konsistenz) + Extern (Markt, Peer Group)
-
-5. **Bestimmung der übertragbaren Ertragskraft**
-   - Scoring, IDW-Kriterien, Abschmelzung
-
-6. **Finalisierung und Gutachten**
-   - Dokumentation, Sensitivität, Abschlussgespräch
+**📌 Richtig eingesetzt:** Multiples sind ein **Plausibilitäts-Check**, kein Bewertungsverfahren. Sie helfen bei der Frage: "Liegt mein DCF-Ergebnis im marktüblichen Korridor?" — aber sie ersetzen nicht die integrierte Planung.
 
 ---
 
-## Slide 14: Wertsteigerung bei KMU
+## Slide 18: Wertsteigerung bei KMU
 
 **1. Bewertungs-Triangel optimieren:**
 - Cashflows steigern (Umsatz, Margen, Effizienz)
@@ -297,7 +366,7 @@ Frühzeitig beginnen – idealerweise Jahre vor dem Verkauf!
 
 ---
 
-## Slide 15: Die Bewertung als Steuerungsinstrument
+## Slide 19: Die Bewertung als Steuerungsinstrument
 
 **Die Bewertung ist kein Ereignis, das „über Sie hereinfällt" — sie ist Ihr Kompass.**
 
@@ -322,7 +391,7 @@ Frühzeitig beginnen – idealerweise Jahre vor dem Verkauf!
 
 ---
 
-## Slide 16: Zusammenfassung
+## Slide 20: Zusammenfassung
 
 1. **Es gibt nicht den einen Unternehmenswert** – Anlass bestimmt alles
 2. **Zukunftserfolgsverfahren** sind Standard (DCF, Ertragswert)
