@@ -84,7 +84,7 @@ Der Bewertungsanlass bestimmt Funktion und Wertkonzept. Steuerrechtliche Anläss
 - **Persönliche / ungewöhnliche Umstände:** Emotionale Bindung, Zeitdruck, strategische Motive, Synergien beim Käufer.
 - **Beim objektiven Wert nicht enthalten:** Subjektive Präferenzen, individuelle Risikoneigung, persönliche Beziehungen.
 
-**📌 Kernaussage:** Der Wert ist das Ergebnis einer Methode — der Preis ist das Ergebnis einer Verhandlung.
+**📌 Kernaussage:** Der Wert ist das Ergebnis einer Methode — der Preis ist das Ergebnis einer Verhandlung. **Die Bewertung liefert den Einigungsbereich** (zwischen den Grenzpreisen) — innerhalb dieses Korridors wirken dann Verhandlungsmacht, Zeitdruck und andere Faktoren.
 
 **Drei Werttreiber:**
 1. Höhe der Cashflows
