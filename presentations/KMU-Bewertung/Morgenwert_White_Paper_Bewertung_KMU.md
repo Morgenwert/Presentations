@@ -253,12 +253,6 @@ Das steuerlich relevante vereinfachte Ertragswertverfahren nach § 199 BewG verw
 
 ---
 
-
----
-*Fortsetzung von Teil 1: Grundlagen (Kapitel 1–3)*
-
----
-
 ## 4 Besonderheiten bei der Bewertung von KMU
 
 ### 4.1 Warum KMU anders bewertet werden müssen
