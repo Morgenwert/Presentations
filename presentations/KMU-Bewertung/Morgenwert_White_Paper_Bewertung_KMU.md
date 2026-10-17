@@ -227,16 +227,24 @@ Der Substanzwert kann als **Liquidationswert** oder **Wiederbeschaffungswert** e
 
 ### 3.5 Vereinfachtes Ertragswertverfahren (§ 199 BewG)
 
-Das steuerlich relevante vereinfachte Ertragswertverfahren nach § 199 BewG verwendet:
-- Durchschnitt der vergangenen **drei Jahre**
-- Multipliziert mit einem Faktor von **13,75**
+Das steuerlich relevante vereinfachte Ertragswertverfahren nach § 199 BewG berechnet:
 
-**Problematik:**
-- Reine **Vergangenheitsbetrachtung**
-- Unterstellt implizit, dass die Zukunft der Vergangenheit entspricht
-- Keine individuelle Zukunftsplanung
+```
+Durchschnitt des Jahresüberschusses der letzten 3 Jahre (bereinigt um Hinzurechnungen/Kürzungen)
+×  Kapitalisierungsfaktor 13,75  (Kehrwert eines typisierten Zinssatzes von 7,3 %)
+=  Vereinfachter Ertragswert
++  Nicht betriebsnotwendiges Vermögen / − Abzüge
+=  Unternehmenswert nach § 199 BewG
+```
 
-> **Achtung:** Die ersparten Bewertungskosten durch die einfache Anwendung werden oft in Form einer **überhöhten Steuerlast** deutlich überkompensiert. Das vereinfachte Ertragswertverfahren hat selbst eine Öffnungsklausel für offensichtlich falsche Ergebnisse.
+**Warum ist dieses Verfahren meist nicht zielführend?**
+
+- **Nur steuerrechtlich relevant:** Das Verfahren ist ausschließlich für erbschaft- und schenkungsteuerliche Bewertungszwecke konzipiert. Für alle anderen Bewertungsanlässe (Transaktionen, gesellschaftsrechtliche Anlässe) ist es **nicht anzuwenden**, auch wenn dies in der Praxis häufig geschieht.
+- **Reine Vergangenheitsbetrachtung:** Das Verfahren unterstellt implizit, dass die künftigen Erträge im Mittel genauso ablaufen wie der festgelegte Vergangenheitszeitraum. Ist dies nicht die realistischste Erwartung, liegt immer eine Fehlbewertung vor.
+- **100 % Übertragbarkeit unterstellt:** Das Verfahren nimmt an, dass die gesamte Ertragskraft auf einen neuen Inhaber übergeht. Bei inhabergeführten KMU ist genau das oft **nicht** der Fall — Inhaberabhängigkeit und personelle Goodwillanteile müssen eigentlich hergerechnet werden.
+- **Hoher Multiplikator + vollständige Übertragbarkeit:** Der typisierte Faktor 13,75 ist hoch, und in Kombination mit der 100-%-Übertragbarkeitsannahme führt das Verfahren in der **Mehrzahl der Fälle zu einem überhöhten Bewertungsergebnis**.
+
+> **Achtung:** Die ersparten Bewertungskosten durch die einfache Anwendung werden oft in Form einer **überhöhten Steuerlast** deutlich überkompensiert. Das vereinfachte Ertragswertverfahren enthält selbst eine **Öffnungsklausel**: Es ist nur anwendbar, solange es nicht zu offensichtlich unzutreffenden Ergebnissen führt. Bei offenkundiger Fehlbewertung ist ein anderes Verfahren (z. B. ein vollständiges Zukunftserfolgverfahren) anzuwenden.
 
 ---
 
@@ -311,12 +319,20 @@ Soweit wertbestimmende immaterielle Faktoren für die Tätigkeit des Inhabers ge
 - Geschätzte Nutzungsdauer durch einen Käufer: 5 Jahre.
 - Der über den nachhaltigen Ertrag hinausgehende Gewinn wird über 5 Jahre abgeschmolzen (z.B. 100 % im Jahr 1, 80 % im Jahr 2, …, 20 % im Jahr 5).
 
-**IDW-Kriterienkatalog für die Dauer:**
-Der IDW Praxishinweis 1/2014 (durch IDW S 1 2026 Tz. 160–168 ersetzt) nennt Kriterien für die Schätzung der Abschmelzdauer:
-- Alter und Gesundheit des Inhabers
-- Kundenstruktur und Bindungsdauer
-- Wettbewerbsvorteile und Marktposition
-- Mitarbeiterbindung und Schlüsselqualifikationen
+**IDW-Kriterienkatalog für die Abschmelzdauer:**
+Für die Schätzung der Abschmelzdauer empfiehlt der IDW-Kriterienkatalog (IDW Praxishinweis 1/2014; durch IDW S 1 2026 Tz. 160–168 ersetzt, der Kriterienkatalog dient weiterhin als Praxishilfe), dass systematisch geprüft wird:
+1. Vertragslaufzeiten und erwartete Vertragsverlängerungen
+2. Typische Produktlebenszyklen
+3. Art der Kundenbeziehung (Laufkundschaft aufgrund der Lage vs. persönliche Beziehung)
+4. Verhalten von Wettbewerbern
+5. Höhe und Dauer der Abhängigkeit von Kunden
+6. Demographische und biometrische Aspekte (z.B. Alter und Gesundheit des Inhabers)
+7. Änderung der Kundenbeziehungen im Zeitablauf
+8. Handelsbilanziell und steuerrechtlich festgelegte Nutzungsdauern immaterieller Vermögenswerte als Anhaltspunkt
+9. Allgemeine wirtschaftliche Nutzungsdauer der spezifischen immateriellen Vermögenswerte
+10. Dauer der steuerlichen Abschreibung als weitere Orientierungsgröße
+
+> **Praxistipp:** Die Art der Kundenbeziehung — z. B. Laufkundschaft vs. langfristige, persönliche Kundenbeziehung — ist ein zentrales Kriterium für die Einschätzung der Abschmelzdauer.
 
 ---
 
