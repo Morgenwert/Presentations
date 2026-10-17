@@ -77,6 +77,14 @@ Der Bewertungsanlass bestimmt Funktion und Wertkonzept. Steuerrechtliche Anläss
 
 - **Grenzpreise** = plausibilisierte Entscheidungswerte (subjektiv)
 - **Objektivierter Wert** = angemessener Wert im Einigungsbereich (neutral)
+- **Der Preis** = das tatsächliche Verhandlungsergebnis — kann mehr oder weniger stark vom Wert abweichen
+
+**Warum weicht der Preis vom Wert ab?**
+- **Verhandlungsmacht:** Ein dringender Verkäufer trifft auf einen geduldigen Käufer (oder umgekehrt).
+- **Persönliche / ungewöhnliche Umstände:** Emotionale Bindung, Zeitdruck, strategische Motive, Synergien beim Käufer.
+- **Beim objektiven Wert nicht enthalten:** Subjektive Präferenzen, individuelle Risikoneigung, persönliche Beziehungen.
+
+**📌 Kernaussage:** Der Wert ist das Ergebnis einer Methode — der Preis ist das Ergebnis einer Verhandlung. **Die Bewertung liefert den Einigungsbereich** (zwischen den Grenzpreisen) — innerhalb dieses Korridors wirken dann Verhandlungsmacht, Zeitdruck und andere Faktoren.
 
 **Drei Werttreiber:**
 1. Höhe der Cashflows
