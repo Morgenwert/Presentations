@@ -164,6 +164,18 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ## Slide 9: Übertragbare Ertragskraft
 
+**Welche Rolle spielt der Eigner? (5 typische Rollen):**
+
+| Rolle | Typisch bei | Bewertungswirkung |
+|---|---|---|
+| (Haupt-)Leistungserbringer | Arzt, Anwalt, Architekt, Handwerker | Leistung prägt Kundenzufriedenheit → hohe Inhaberabhängigkeit |
+| Verkaufsleiter | Akquise läuft über den Inhaber | Kunden gewinnen mit seiner Person |
+| Geschäftsleiter | Starke Markt-/Marketingeffekte | Ergebnisse abhängig von seiner Aktivität |
+| Vertrauensperson | Hohe Mitarbeiterloyalität an die Person | Personalbindung geht mit dem Inhaber |
+| Träger bestimmten Wissens | Know-How, neue Produkte/Verfahren | Innovationskraft nicht übertragbar |
+
+> Jeder nachweisbare persönliche Anteil senkt die übertragbare Ertragskraft.
+
 **Betrieblicher vs. Persönlicher Goodwill**
 
 | Betrieblicher Goodwill (✅ übertragbar) | Persönlicher Goodwill (❌ nicht übertragbar) |
@@ -285,7 +297,32 @@ Frühzeitig beginnen – idealerweise Jahre vor dem Verkauf!
 
 ---
 
-## Slide 15: Zusammenfassung
+## Slide 15: Die Bewertung als Steuerungsinstrument
+
+**Die Bewertung ist kein Ereignis, das „über Sie hereinfällt" — sie ist Ihr Kompass.**
+
+**1. Vorher-Nachher-Vergleich**
+- Welche Maßnahmen haben Sie in den letzten 3–5 Jahren umgesetzt?
+- Wie hat sich der DCF-Wert über diese Zeit entwickelt? (Maßeinheit für echten Fortschritt)
+
+**2. Maßnahmen-Roadmap (Exit-Readiness)**
+- Welche Wertsteigerungs-Maßnahmen sind identifiziert / in Arbeit / geplant?
+- Wofür braucht es Zeit und Nachweis? (z.B. zweite Führungsebene: ~2 Jahre belastbarer Betrieb ohne den Inhaber)
+
+**3. Wirkungsanalyse**
+- Jede Maßnahme → konkreter Bewertungsparameter:
+  - 2. Führungsebene → Abschmelz-Höhe sinkt (betrieblicher Goodwill steigt)
+  - Prozessdoku → operatives Risiko sinkt, Plausibilisierung wird belastbarer
+  - Kundenverteilung im Team → Abschmelz-Anteil schrumpft
+  - Datenqualität → weniger Bereinigungen, schnellere und glaubwürdigere Bewertung
+  - Diversifikation → niedrigere WACC-Risikoprämie
+- Beispiel: 500 T€ in eine neue Linie → welcher Cashflow-Effekt in 3 Jahren → welche Wertwirkung?
+
+**📌 Prinzip:** Legitime Wertsteuerung verändert den objektivierten Wert — echte Wertschöpfung (Cashflow, Nachhaltigkeit, Risiko), keine Zahlen-Kosmetik. Wer vor dem Verkauf an den richtigen Stellschrauben dreht, verschiebt seinen Grenzpreis — auf Basis von Fakten, die der Käufer prüft und sehen kann.
+
+---
+
+## Slide 16: Zusammenfassung
 
 1. **Es gibt nicht den einen Unternehmenswert** – Anlass bestimmt alles
 2. **Zukunftserfolgsverfahren** sind Standard (DCF, Ertragswert)
