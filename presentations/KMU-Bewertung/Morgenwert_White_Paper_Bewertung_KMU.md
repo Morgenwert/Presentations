@@ -166,20 +166,30 @@ WACC = EK-Kosten × (EK/GK) + FK-Kosten (nach Steuern) × (FK/GK)
 
 ---
 
-> **⚠️ WICHTIG: KMU-Risikoaufschläge nach IDW S 1 2026**
+> **⚠️ WICHTIG: Kleinheits- und Liquiditäts-Rabatte nach IDW S 1 2026**
 >
-> Der Ansatz von Risikozuschlägen für Aspekte jenseits des operativen Risikos sowie des Kapitalstrukturrisikos, z.B. für die **geringe Größe von KMU** oder die **mangelnde Fungibilität**, ist bei der Ermittlung objektivierter Unternehmenswerte und plausibilisierter Entscheidungswerte für KMU **NICHT sachgerecht** (Tz. 168).
+> Der Ansatz pauschaler Risikozuschläge oder Rabatte für Aspekte jenseits des operativen Risikos sowie des Kapitalstrukturrisikos, z.B. für die **geringe Größe von KMU** oder die **mangelnde Fungibilität/Illiquidität**, ist bei der Ermittlung objektivierter Unternehmenswerte und plausibilisierter Entscheidungswerte für KMU **NICHT sachgerecht** (Tz. 168).
 >
-> **Falsch (bisher üblich):**
-> - Size Premium (2–6 % Aufschlag für kleine Unternehmen)
-> - Illiquiditätszuschlag (fehlender Börsenhandel)
-> - Fungibilitätsabschlag (fehlende Diversifizierung)
+> **Die beiden Ausprägungen in den Bewertungsrechnungen:**
 >
-> **Richtig (nach 2026):**
-> - KMU-Besonderheiten sind über die **übertragbare Ertragskraft** abzubilden
-> - Abschmelzung personenbezogener Erfolgsfaktoren
-> - Kalkulatorischer Unternehmerlohn
-> - Sphären-Trennung (betrieblich vs. privat)
+> 1. **Size Premium im Kapitalisierungszins**
+>    Historisch wurde für KMU häufig ein Aufschlag auf den Discounting-Zinssatz (z.B. 2–6 %) angesetzt. Nach IDW S 1 2026 **nicht sachgerecht** – der Zinssatz darf nur operative Risiken und Kapitalstruktur-Risiken enthalten.
+>
+> 2. **Größen-/Liquiditäts-/Fungibilitätsabschlag auf den ermittelten Wert**
+>    Pauschale Abschläge auf den **ermittelten** Wert (z.B. 30–50 % „KMU-Abzug", 10–15 % „Illiquiditätsrabatt", 10–30 % „Fungibilitätsabschlag") sind ebenfalls **nicht sachgerecht**.
+>
+> **Richtig (nach 2026): Über Sachwerte lösen**
+> - **Ertragskraft-Basis:** Personen-/Inhaber-gebundene Überrenditen über die **Abschmelz-Methode** (Abs. 4.3)
+> - **Unternehmerlohn:** Kalkulatorischer Unternehmerlohn in die Bereinigung einarbeiten (Abs. 4.4)
+> - **Sphären-Trennung:** Privatsphäre vom Betriebsvermögen trennen (Abs. 4.5)
+> - **Liquiditäts-/Fungibilität:** Wenn eine Illiquidität oder Fungibilität tatsächlich existiert (z.B. bei nicht börsennotierten Anteilen, bei Minderheitsanteilen), ist sie **nicht über einen pauschalen Rabatt**, sondern über **tatsächliche, einzelfallbezogene Faktoren** abzubilden:
+>   - **Beratungs-/Transaktionskosten** (z.B. 2–5 % für MBO-/Transaktionsabwicklung)
+>   - **Verkaufsdauer/Marktzugang** (z.B. 12–18 Monate Vermarktung bei KMU)
+>   - **Käuferkreis-Einschränkung** (z.B. 5–10 % bei fehlendem Wettbewerber)
+>   - **Minderheits-/Liquiditäts-Discount** nur, wenn tatsächlich auf **einen einzigen Käufer** eingegangen werden muss (d.h. nicht im DCF-Parameter, sondern als transaktionspreisliche Anpassung)
+>
+> **Zusammenfassung:**
+> Pauschale Rabatte (Size Premium, „Größenabschlag", Illiquiditätsrabatt, Fungibilitätsabschlag) sind nach IDW S 1 2026 **nicht sachgerecht** – ob als Zuschlag im Zinssatz oder als Abschlag auf den ermittelten Wert. Stattdessen sind KMU-Besonderheiten über (1) **übertragbare Ertragskraft** und (2) **tatsächliche, einzelfallbezogene Transaktions- und Marktzugangsfaktoren** abzubilden.
 
 ---
 
@@ -474,7 +484,7 @@ Die Bewertung von kleinen und mittleren Unternehmen erfordert ein fundiertes Ver
 | **Wertkonzepte 2026** | Objektivierter Wert (atomistische Anteilseigner) vs. Plausibilisierter Entscheidungswert (spezifische Entscheider). Subjektiver Wert entfällt. |
 | **Funktionen 2026** | Neutraler Gutachter (vollumfänglich), Neutraler Sachverständiger (ausreichend), Berater (keine Plausibilisierung). |
 | **Verfahren** | DCF und Ertragswertverfahren sind konzeptionell identisch. Multiplikatoren dienen der Plausibilisierung. |
-| **KMU-Risikoaufschläge** | Nach IDW S 1 2026 Tz. 168 **nicht sachgerecht** bei objektivierten Werten. Stattdessen: Abschmelzung, Unternehmerlohn, Sphären-Trennung. |
+| **KMU-Risikoaufschläge** | Nach IDW S 1 2026 Tz. 168 **nicht sachgerecht** – weder als Zinssatz-Aufschlag (Size Premium) noch als pauschaler Wertabschlag (Größen-, Liquiditäts-, Fungibilitätsabschlag). Stattdessen: Abschmelzung, Unternehmerlohn, Sphären-Trennung – und für echte Liquiditäts-/Fungibilitätsfragen tatsächliche Transaktions- und Marktzugangsfaktoren (z.B. Beratungs- und Vermarktungskosten). |
 | **Modifizierte Ertragswertmethode** | Nach IDW S 1 2026 Tz. 161 **KEINE sachgerechte Methode** (Vergangenheitsverfahren). |
 | **Übertragbare Ertragskraft** | Kernstück der KMU-Bewertung. Nur nachhaltig übertragbare Erträge sind voll zu bewerten. |
 | **Abschmelz-Methode** | Bei inhabergeprägten KMU sind personenbezogene Erfolgsfaktoren über einen endlichen Zeitraum abzuschmelzen. |
