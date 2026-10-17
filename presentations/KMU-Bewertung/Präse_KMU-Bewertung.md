@@ -67,7 +67,28 @@ Der Bewertungsanlass bestimmt Funktion und Wertkonzept. Steuerrechtliche Anläss
 
 ---
 
-## Slide 5: Der Anlass bestimmt Methode und Wert
+## Slide 5: Wert vs. Preis
+
+**Das Grenzpreis-Konzept:**
+
+```
+[Grenzpreis Verkäufer] ← [Einigungsbereich] → [Grenzpreis Käufer]
+```
+
+- **Grenzpreise** = plausibilisierte Entscheidungswerte (subjektiv)
+- **Objektivierter Wert** = angemessener Wert im Einigungsbereich (neutral)
+
+**Drei Werttreiber:**
+1. Höhe der Cashflows
+2. Zeitschiene (Länge und Nachhaltigkeit)
+3. Risiko (Unsicherheit der Überschüsse)
+
+**📌 Zukunft schlägt Vergangenheit:**
+Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
+
+---
+
+## Slide 6: Der Anlass bestimmt Methode und Wert
 
 **Es gibt nicht "den einen" Unternehmenswert!**
 
@@ -185,28 +206,7 @@ KMU-Besonderheiten über **übertragbare Ertragskraft** abbilden:
 
 ---
 
-## Slide 10: Wert vs. Preis
-
-**Das Grenzpreis-Konzept:**
-
-```
-[Grenzpreis Verkäufer] ← [Einigungsbereich] → [Grenzpreis Käufer]
-```
-
-- **Grenzpreise** = plausibilisierte Entscheidungswerte (subjektiv)
-- **Objektivierter Wert** = angemessener Wert im Einigungsbereich (neutral)
-
-**Drei Werttreiber:**
-1. Höhe der Cashflows
-2. Zeitschiene (Länge und Nachhaltigkeit)
-3. Risiko (Unsicherheit der Überschüsse)
-
-**📌 Zukunft schlägt Vergangenheit:**
-Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
-
----
-
-## Slide 11: KMU-Besonderheiten
+## Slide 10: KMU-Besonderheiten
 
 **Typischer KMU-Abschlag: 30-50%**
 
@@ -226,7 +226,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 12: Übertragbare Ertragskraft
+## Slide 11: Übertragbare Ertragskraft
 
 **Welche Rolle spielt der Eigner? (5 typische Rollen):**
 
@@ -253,7 +253,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 13: Formen der Übertragbarkeit
+## Slide 12: Formen der Übertragbarkeit
 
 **Wie lange bleibt die Ertragskraft nach dem Eigentumswechsel bestehen?** — Fortführung der Goodwill-Trennung (Slide 12): betrieblicher Goodwill bleibt im Wert, persönlicher Goodwill erlischt mit dem Eigentümer. Die entscheidende Frage ist: wie und wann?
 
@@ -273,7 +273,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 14: Abschmelz-Methode
+## Slide 13: Abschmelz-Methode
 
 **(a) Abschmelzung des Kundenstamms**
 - Bei isolierbaren Faktoren (z.B. Kundenstamm)
@@ -292,7 +292,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 15: Abschmelz-Parameter
+## Slide 14: Abschmelz-Parameter
 
 **Scoring-Methode (MuM-Methode):**
 10 Kategorien (je 10%):
@@ -315,7 +315,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 16: Abschmelzung in der Praxis
+## Slide 15: Abschmelzung in der Praxis
 
 **4-Schritte-Vorgehen:**
 
@@ -334,7 +334,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 17: KMU-Multiples als Scheinlösung?
+## Slide 16: KMU-Multiples als Scheinlösung?
 
 **Warum Multiplikatoren allein nicht reichen:**
 
@@ -347,7 +347,7 @@ Auch Vergangenheitswerte implizieren eine Zukunftsannahme.
 
 ---
 
-## Slide 18: Wertsteigerung bei KMU
+## Slide 17: Wertsteigerung bei KMU
 
 **1. Bewertungs-Triangel optimieren:**
 - Cashflows steigern (Umsatz, Margen, Effizienz)
@@ -366,7 +366,7 @@ Frühzeitig beginnen – idealerweise Jahre vor dem Verkauf!
 
 ---
 
-## Slide 19: Die Bewertung als Steuerungsinstrument
+## Slide 18: Die Bewertung als Steuerungsinstrument
 
 **Die Bewertung ist kein Ereignis, das „über Sie hereinfällt" — sie ist Ihr Kompass.**
 
@@ -391,7 +391,7 @@ Frühzeitig beginnen – idealerweise Jahre vor dem Verkauf!
 
 ---
 
-## Slide 20: Zusammenfassung
+## Slide 19: Zusammenfassung
 
 1. **Es gibt nicht den einen Unternehmenswert** – Anlass bestimmt alles
 2. **Zukunftserfolgsverfahren** sind Standard (DCF, Ertragswert)
